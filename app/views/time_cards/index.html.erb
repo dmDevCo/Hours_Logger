@@ -1,0 +1,33 @@
+<h1>Listing time_cards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Time started</th>
+      <th>Time stopped</th>
+      <th>Date</th>
+      <th>Message</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @time_cards.each do |time_card| %>
+      <tr>
+        <td><%= time_card.time_started %></td>
+        <td><%= time_card.time_stopped %></td>
+        <td><%= time_card.date %></td>
+        <td><%= time_card.message %></td>
+        <td><%= link_to 'Show', time_card %></td>
+        <td><%= link_to 'Edit', edit_time_card_path(time_card) %></td>
+        <td><%= link_to 'Destroy', time_card, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Time card', new_time_card_path %>

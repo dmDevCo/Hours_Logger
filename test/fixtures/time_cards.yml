@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  time_started: 2014-07-29 22:06:16
+  time_stopped: 2014-07-29 22:06:16
+  date: 2014-07-29
+  message: MyString
+
+two:
+  time_started: 2014-07-29 22:06:16
+  time_stopped: 2014-07-29 22:06:16
+  date: 2014-07-29
+  message: MyString
