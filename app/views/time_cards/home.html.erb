@@ -1,12 +1,9 @@
-<h1 id="name">Your Name</h1>
+<div class="container">
+		<h1 id="name">Hours Logger</h1>
+		<p  id="time">Time Working: <span id="current_time">00:00:00</span></p>
 
-<p id="time">Time</p>
+		<button class="button" id="working">I'm Working</button>
+		<%= button_to  "Not Working", "/", :class => "button", :id => "not_working" %>
+		<%= button_to  "My Stats", "/", :class => "button", :id => "stats"%>
 
- <div class="row container">
-<div class="col-sm-6">test</div> 
 </div>
-<%= button_to  "I'm Working", "/", :class => "button", :id => "working" %>
-
-<%= button_to  "Not Working", "/", :class => "button", :id => "not_working" %>
-
-<%= button_to  "My Stats", "/", :class => "button", :id => "stats"%>
