@@ -1,0 +1,44 @@
+	<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" id="my_modal_dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="myModalLabel">Clocking Out?</h4>
+				  </div>
+				  
+				  <%= form_for(@time_card, html: { id: "myForm" } ) do |f| %>
+				  
+					  <div class="modal-body">
+							Time: <span id="current_time_2">00:00:00</span> <br> <br>
+						
+							 <% if @time_card.errors.any? %>
+								<div id="error_explanation">
+								  <h2><%= pluralize(@time_card.errors.count, "error") %> prohibited this time_card from being saved:</h2>
+
+								  <ul>
+								  <% @time_card.errors.full_messages.each do |msg| %>
+									<li><%= msg %></li>
+								  <% end %>
+								  </ul>
+								</div>
+						    <% end %>
+						  
+						  
+							<div class="field">
+							<%= f.label "What did you do?" %><br>
+							<%= f.text_field :message %>
+							</div>
+					  </div>
+					  
+					  
+					  <div class="modal-footer">
+						<button type="button" id="cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<%= f.submit "Log it!", class: "btn btn-primary" %>
+						<input type="hidden" name="total_seconds" value="">
+					  </div>
+				  
+				  <% end %>
+				</div>
+			  </div>
+			</div>

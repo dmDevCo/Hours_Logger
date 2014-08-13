@@ -3,6 +3,17 @@ HoursLogger::Application.routes.draw do
   
   root :to => 'time_cards#home', :as => 'hours_logger'
 
+
+  get "/month" => 'time_cards#month'
+  get "/year" => 'time_cards#year'
+  get "/all" => 'time_cards#all'
+  
+  
+  get '/stats' => 'time_cards#stats'
+  post '/stats' => 'time_cards#stats'
+  
+  post '/' => 'time_cards#home'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

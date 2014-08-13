@@ -2,11 +2,30 @@
 	var start = 0;
 	var total_seconds = 0;
 	var seconds = 0;
+	var intervalID=0;
 	
 	$('#working').unbind().click(function() {
 		start = new Date;
-		window.setInterval("updateTime()", 1000);
+		var x = window.setInterval("updateTime()", 1000);
+		intervalID = x;
+		$('#working').hide();
+		$('#not_working').show();
+		$('#notice').hide();
 	});	
+	
+	$('#not_working').unbind().click(function() {
+		clearInterval(intervalID);
+		var form = document.getElementById("myForm");
+		form.elements['total_seconds'].value = total_seconds;
+		
+		
+	});	
+	
+	$('#cancel').unbind().click(function() {
+		x = window.setInterval("updateTime()", 1000);
+		intervalID = x;
+	});	
+	
 
 
 
@@ -30,4 +49,5 @@ function updateTime(){
 			var currentTimeString = hours + ":" + minutes + ":" + seconds;
 			
 			document.getElementById("current_time").innerHTML = currentTimeString;
+			document.getElementById("current_time_2").innerHTML = currentTimeString;
 		}

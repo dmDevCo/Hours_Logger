@@ -1,0 +1,62 @@
+<a href="http://localhost:3000" id="link_back"><button  id="back">Back</button></a>
+
+	<div class="header">
+			
+			<h4 id="hours_logger">Hours Logger</h4>
+	</div>
+
+
+
+		<div id="menu">
+			<p class="menu_item" ><%= link_to "Week", "/stats" %></p>
+			<p class="menu_item" id="current">Month</p>
+			<p class="menu_item" ><%= link_to "Year", "/year" %></p>
+			<p class="menu_item" ><%= link_to "All", "/all" %></p>
+		</div>
+			
+			
+			
+		<p id="total">Total: <%=  number_with_precision(@hours_this_month, :precision => 2) %> hrs</p>
+
+
+
+
+	<% @time_cards.each do |time_card| %>
+	<div class="container">
+		<p id = "log"><%= @count = @count+1 %></p>
+		
+		<div class=".col-md-6 <%= cycle("time_card" , "time_card_2" ) %>">
+				<div class="time_card_wrapper">
+					<p id = "date"><%= time_card.date.strftime("%A, %h %e %G") %></p>
+					
+					<% 
+						local_start	= Time.new
+						local_stop	= Time.new
+						local_start = time_card.time_started
+						local_stop  = time_card.time_stopped
+						
+						local_start = local_start.localtime
+						local_stop  = local_stop.localtime
+						
+						# Adjust Daylight Savings 
+				
+							local_start = (local_start+3600)
+							local_stop = (local_stop+3600)
+						
+						
+						local_start = local_start.strftime('%l:%M%P')
+						local_stop = local_stop.strftime('%l:%M%P')
+						
+						
+					%>
+				<br><p id="the_time"><%= local_start %> - <%= local_stop %></p> 
+				
+				<p id="hours"><%= number_with_precision(((time_card.time_stopped - time_card.time_started)/3600), :precision => 2) %> hrs</p>
+				<p id="message"><%= time_card.message %></p>
+			</div>
+			<%= link_to image_tag("edit.png", :class => "edit_icon"), edit_time_card_path(time_card) %>
+			<%= link_to image_tag("delete.png", :class => "cancel_icon"), time_card, method: :delete, data: { confirm: "Are you sure?" } %>
+		</div>
+	</div>
+	<% end %>
+

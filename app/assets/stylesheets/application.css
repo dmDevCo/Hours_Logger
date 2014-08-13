@@ -22,7 +22,7 @@
  }
 
  #name{
- padding-top: 10%;
+ padding-top: 6%;
   padding-bottom: 10%;
  text-align: center;
  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
@@ -55,6 +55,7 @@
  background-color:#FC0001;
  color:white;
  font-size: 2vw;
+ display:none;
  }
  
  #stats{
@@ -63,5 +64,166 @@
  font-size: 2vw;
  }
  
+ #myModalLabel, .modal-body{
+ text-align:center;
+ }
+ 
+ #my_modal_dialog{
+	width:40%;
+ }
+ 
+ #notice{
+	text-align:center;
+	color:green;
+	font-size: 1.5vw;
+ }
+ 
+ /* ***********************************************************   My Stats    **********************************************************  */
+ 
+ .header{
+ padding-top: 2%;
+ padding-bottom: 1%;
+ }
+ 
+ #back{
+ display: inline-block;
+ margin-left:10%;
+ margin-top: 4%;
+ width:10%;
+ line-height: 2.2em;
+ background-color: #0887B4;
+ border: 1px solid white;
+ border-radius: 3px;
+ color: white;
+ font-size: 1.7vw;
+ vertical-align:middle;
+ }
+ 
+ #link_back:hover{
+	background-color:white;
+ }
+ 
+ .menu_item:hover{
+	background-color:white;
+ }
+ 
+ .menu_item a:hover,a:focus{
+ color:#2a6496;
+ text-decoration:underline;
+ background-color:white;}
+ 
+ #hours_logger{
+ display:inline-block;
+ margin-left: 40%;
+ font-size: 3vw;
+ text-align: center;
+ font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+ vertical-align:middle;
+ }
+ 
+ 
+ #menu{
+ margin-left: 32%;
+ padding-top: 6%;
+ padding-bottom: 4%;
+ color: grey;
+ }
+ 
+ .menu_item{
+ float:left;
+ padding-left:3%;
+ padding-right:3%;
+ font-size: 1.5vw;
+ }
+ 
+ #total{
+ padding-top:3%;
+ padding-bottom:3%;
+ margin-bottom:3%;
+ margin-left: 30%;
+ color: #559D44;
+ font-size:2vw;
+ width:40%;
+ text-align:center;
+ border-top: 1px solid green;
+ border-bottom: 1px solid green;
+ }
+ 
+ .time_card{
+ padding-left: 35%;
+ padding-top: 3%;
+ padding-bottom:3%;
+ background-color:#E9FBFF;
+ }
+ 
+ .time_card_2{
+ padding-left: 35%;
+ padding-top: 3%;
+ padding-bottom:3%;
+ background-color:#E7FFE9;
+ }
+ 
+ 
+ #log{
+ display:inline-block;
+ float:left;
+ margin-left: 15%;
+ margin-top: 3%;
+ font-size: 1em;
+ font-weight: 500;
+ }
+ 
+ #date{
+ display:inline-block;
+ margin-left:-7%;
+ margin-bottom: 0;
+ 
+ }
+ 
+#current{
+ color: #EF3B3B;
+ font-size: 2.2vw;
+}
+
+
+.cancel_icon{
+width:1em;
+margin-top: -2em;
+display: inline-block;
+margin-right:25%;
+float:right;
+}
+
+.edit_icon{
+width:1em;
+margin-top: -7em;
+display: inline-block;
+margin-right:25%;
+float:right;
+}
+
+#the_time, #message{
+display: inline-block;
+}
+
+#the_time{
+font-size: .8em;
+}
+
+#hours{
+font-size: .9em;
+margin-bottom:0;
+margin-top: .2em;
+}
+
+#message{
+font-size: .8em;
+
+}
+
+.time_card_wrapper{
+width:60%;
+margin-left:-5%;
+}
  
  
