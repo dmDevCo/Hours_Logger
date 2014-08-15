@@ -24,7 +24,7 @@
 	<div class="container">
 		<p id = "log"><%= @count = @count+1 %></p>
 		
-		<div class=".col-md-6 <%= cycle("time_card" , "time_card_2" ) %>">
+		<div class=" <%= cycle("time_card" , "time_card_2" ) %>">
 				<div class="time_card_wrapper">
 					<p id = "date"><%= time_card.date.strftime("%A, %h %e %G") %></p>
 					

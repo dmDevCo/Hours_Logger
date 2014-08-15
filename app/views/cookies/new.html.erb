@@ -1,0 +1,43 @@
+<script>
+setTimeout(function(){$("#notice").fadeOut()}, 3000);
+</script>
+
+<div class="container">
+
+	<div class="row"> 
+	<h4 id="hours_logger_signup">Hours Logger</h4>
+	</div>
+	
+	<div class="row">
+		<p id="signup_text">Hi, to track your time, I need to know who you are.<br></p>
+	</div>
+	<% if notice %>
+	<p id="notice" class="<%= flash[:notice][:class] %>"><%= flash[:notice][:body] %></p>
+	<% end %>
+	
+	<%= form_tag(:id => "new_user") do %>
+		
+	
+  
+  
+	<fieldset id="login_form">
+	<div>
+	<%= text_field_tag :name, params[:name], placeholder: "Username", class: "input_1", id: "login_name" %>
+	</div>
+	
+	<div>
+	<%= password_field_tag :password, params[:password], placeholder: "Password", class: "input_1" %>
+	</div>
+	<div>
+	<%= submit_tag "Login", class: "button_2", id: "submit" %>
+	</div>
+	</fieldset>
+<% end %>
+
+	
+</div>
+
+
+
+
+

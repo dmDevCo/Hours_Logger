@@ -1,18 +1,31 @@
 HoursLogger::Application.routes.draw do
+  get "cookies/new"
+  get "cookies/create"
+  get "cookies/destroy"
+  resources :users
+
   resources :time_cards
   
   root :to => 'time_cards#home', :as => 'hours_logger'
 
+  
+  controller :cookies do
+	get 'login' => :new
+	post 'login' => :create
+	delete 'logout' => :destroy
+  end
+  
+  
 
   get "/month" => 'time_cards#month'
   get "/year" => 'time_cards#year'
   get "/all" => 'time_cards#all'
-  
-  
   get '/stats' => 'time_cards#stats'
-  post '/stats' => 'time_cards#stats'
+  get "/signup" => "users#signup"
   
+  post '/stats' => 'time_cards#stats'
   post '/' => 'time_cards#home'
+  post '/cookies/new' => 'cookies#create'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

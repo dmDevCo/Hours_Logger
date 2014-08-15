@@ -1,0 +1,31 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+     
+      <% @user.errors.full_messages.each do |msg| %>
+        <p class="msg"><%= msg %></p>
+      <% end %>
+      
+    </div>
+  <% end %>
+
+  <fieldset>
+		<legend></legend>
+		<div>
+		
+		<%= f.text_field :name, :size => 40, placeholder: "Username", class: "input" %>
+		</div>
+		
+		<div>
+		<%= f.password_field :password, :size => 40, placeholder: "Password", class: "input" %>
+		</div>
+		
+		<div>
+		<%= f.password_field :password_confirmation, :size => 40, placeholder: "Confirm Password", class: "input" %>
+		</div>
+		
+		<div>
+		<%= f.submit "Create Account", class: "button_1", id: "submit"%>
+		</div>
+	</fieldset>
+<% end %>

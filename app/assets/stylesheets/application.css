@@ -21,9 +21,9 @@
  padding-bottom:10%;
  }
 
- #name{
- padding-top: 6%;
-  padding-bottom: 10%;
+ #name_home{
+ margin-top: 4%;
+ padding-bottom: 10%;
  text-align: center;
  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
  }
@@ -169,7 +169,7 @@
  float:left;
  margin-left: 15%;
  margin-top: 3%;
- font-size: 1em;
+ font-size: 1.4em;
  font-weight: 500;
  }
  
@@ -177,6 +177,7 @@
  display:inline-block;
  margin-left:-7%;
  margin-bottom: 0;
+ font-size: 1.6em;
  
  }
  
@@ -187,7 +188,7 @@
 
 
 .cancel_icon{
-width:1em;
+width:1.8em;
 margin-top: -2em;
 display: inline-block;
 margin-right:25%;
@@ -195,7 +196,7 @@ float:right;
 }
 
 .edit_icon{
-width:1em;
+width:1.8em;
 margin-top: -7em;
 display: inline-block;
 margin-right:25%;
@@ -207,23 +208,143 @@ display: inline-block;
 }
 
 #the_time{
-font-size: .8em;
+font-size: 1.3em;
+margin-top: .5em;
 }
 
 #hours{
-font-size: .9em;
+font-size: 1.4em;
 margin-bottom:0;
-margin-top: .2em;
+margin-top: .8em;
 }
 
 #message{
-font-size: .8em;
-
+font-size: 1.3em;
+margin-top: .4em;
 }
 
 .time_card_wrapper{
 width:60%;
 margin-left:-5%;
 }
+ 
+ 
+ /* ***********************************************************   Signup    **********************************************************  */
+ 
+ #hours_logger_signup{
+ margin-top:2em;
+ margin-bottom:1.4em;
+ display:inline-block;
+ margin-left: 0;
+ font-size: 3em;
+ text-align: center;
+ font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+ vertical-align:middle;
+ width:100%;
+ }
+ 
+ #signup_text{
+ text-align: center;
+ padding-top: 3em;
+ padding-bottom: 2em;
+ 
+ }
+ 
+ #new_user{
+ text-align: center;
+ }
+ 
+ .input{
+	text-align:center;
+	margin-top: .4em;
+	margin-bottom: .6em;
+	margin-left: 0;
+	line-height:2em;
+	font-size: 1.4em;
+ }
+ 
+ .msg{
+ color: white;
+ font-size: 1em;
+ }
+ 
+  #submit{
+ background-color:#0887B4;
+ color:white;
+ font-size: 2vw;
+ }
+ 
+  .button_1{
+  margin-top: 3%;
+  border: 1px solid white;
+  border-radius: 3px;
+  width:40%;
+  margin-left: 0;
+  line-height: 2em;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+ }
+ 
+ #username{
+ color:#5F99FF;
+ margin-top:5%;
+ width:80%;
+ text-align:right;
+ margin-right: 0;
+ margin-left: 0;
+ font-size: 1.4em;
+ 
+ }
+ 
+ #signout{
+ width:80%;
+ text-align:right;
+ margin-top:0;
+ margin-right: 0;
+ font-size: 1.4em;
+ }
+ 
+  #signout:hover{
+	background-color:white;
+	color:red;
+ }
+ 
+ /* ***********************************************************   Login    **********************************************************  */
+
+ 
+ #login_form{
+	text-align:center;
+ }
+ 
+ .button_2{
+  margin-top: 3%;
+  border: 1px solid white;
+  border-radius: 3px;
+  width:30%;
+  margin-left: 0;
+  line-height: 2em;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+ }
+ 
+  .input_1{
+	width:20em;
+	text-align:center;
+	margin-top: .4em;
+	margin-bottom: .6em;
+	margin-left: 0;
+	line-height:2em;
+	font-size: 1.4em;
+ }
+ 
+ #login_name{
+ margin-top:1em;
+ }
+ 
+ .invalid{
+ color:#FF4F4F !important;
+ }
+ 
+ .logged_out{
+ color:#00D27F !important;
+ }
  
  

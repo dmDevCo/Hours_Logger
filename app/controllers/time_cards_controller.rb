@@ -8,11 +8,20 @@ class TimeCardsController < ApplicationController
   end
   
   def home
-    @time_card = TimeCard.new
+	@time_card = TimeCard.new
+	
+	user = User.find(cookies[:user_id])
+		@user = user
+	rescue ActiveRecord::RecordNotFound
+		redirect_to "/login", :alert => "You need to sign in."
+	
+	
+
+	
   end
   
   def stats
-    @time_cards = TimeCard.where(created_at: (Time.now.at_end_of_week-7.day) .. Time.now.at_end_of_week)
+    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(created_at: (Time.now.at_end_of_week-7.day) .. Time.now.at_end_of_week)
 	@count=0;
 	@hours_this_week=0;
 	
@@ -23,7 +32,7 @@ class TimeCardsController < ApplicationController
   
   
    def month
-    @time_cards = TimeCard.where(created_at: Time.now.at_beginning_of_month .. Time.now.at_end_of_month)
+    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(created_at: Time.now.at_beginning_of_month .. Time.now.at_end_of_month)
 	@count=0;
 	@hours_this_month=0;
 	
@@ -35,7 +44,7 @@ class TimeCardsController < ApplicationController
   
   
    def year
-    @time_cards = TimeCard.where(created_at: (Time.now.at_end_of_year-365.day) .. Time.now.at_end_of_year)
+    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(created_at: (Time.now.at_end_of_year-365.day) .. Time.now.at_end_of_year)
 	@count=0;
 	@hours_this_year=0;
 	
@@ -47,7 +56,7 @@ class TimeCardsController < ApplicationController
   
   
    def all
-    @time_cards = TimeCard.all
+    @time_cards = TimeCard.where(user_id: cookies[:user_id])
 	@count=0;
 	@hours_all=0;
 	
@@ -77,6 +86,8 @@ class TimeCardsController < ApplicationController
   def create
 	now = Time.now
     @time_card = TimeCard.new(time_card_params)
+	@time_card.user_id = cookies[:user_id]
+	
 	
 	@time_card.time_stopped = now
 	@time_card.time_started= (now-params[:total_seconds].to_i)
