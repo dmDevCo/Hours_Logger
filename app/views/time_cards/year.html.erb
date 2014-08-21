@@ -41,11 +41,15 @@
 
 	<% @time_cards.each do |time_card| %>
 	<div class="container">
-		<p id = "log"><%= @count = @count+1 %></p>
-		
-		<div class=".col-md-6 <%= cycle("time_card" , "time_card_2" ) %>">
-				<div class="time_card_wrapper">
-					<p id = "date"><%= time_card.date.strftime("%A, %h %e %G") %></p>
+	
+		<div class="<%= cycle("time_card" , "time_card_2" ) %>">
+				
+					<div class="row">
+						<div class="col-xs-1"></div>
+						<p class="col-xs-1" id="log"><%= @count = @count+1 %></p>
+						<p class="col-xs-9" id = "date"><%= time_card.date.strftime("%A, %h %e %G") %></p>
+						<div class="col-xs-1"></div>
+					</div>
 					
 					<% 
 						local_start	= Time.new
@@ -54,18 +58,30 @@
 						local_stop  = time_card.time_stopped
 						
 						
+						local_start_1 = local_start
+						local_stop_1 = local_stop
 						local_start = local_start.strftime('%l:%M%P')
 						local_stop = local_stop.strftime('%l:%M%P')
-						
-						
 					%>
-		
-				<br><p id="the_time"><%= local_start %> - <%= local_stop %></p> 
-				<p id="hours"><%= number_with_precision(((time_card.time_stopped - time_card.time_started)/3600), :precision => 2) %> hrs</p>
-				<p id="message"><%= time_card.message %></p>
-			</div>
-			<%= link_to image_tag("edit.png", :class => "edit_icon"), edit_time_card_path(time_card) %>
-			<%= link_to image_tag("delete.png", :class => "cancel_icon"), time_card, method: :delete, data: { confirm: "Are you sure?" } %>
+					
+				<div class="row">
+					<div class="col-xs-2"></div>
+					<p class="col-xs-8" id="the_time"><%= local_start %> - <%= local_stop %></p>
+					<%= link_to image_tag("edit.png", :class => "edit_icon"), edit_time_card_path(time_card) %>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-2"></div>
+					<p class="col-xs-8" id="hours"><%= number_with_precision(((local_stop_1 - local_start_1)/3600), :precision => 2) %> hrs</p>
+					
+				</div>
+				
+				<div class="row">
+				<div class="col-xs-2"></div>
+				<p class="col-xs-7" id="message"><%= time_card.message %></p>
+				<div class="col-xs-1"></div>
+				<%= link_to image_tag("delete.png", :class => "cancel_icon"), time_card, method: :delete, data: { confirm: "Are you sure you want to delete this time card?" } %>
+				</div>
 		</div>
 	</div>
 	<% end %>

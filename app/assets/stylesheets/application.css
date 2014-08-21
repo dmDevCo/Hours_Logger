@@ -163,14 +163,14 @@ padding-bottom: 3.5em;
  }
  
  .time_card{
- padding-left: 35%;
+ padding-left: 0;
  padding-top: 3%;
  padding-bottom:3%;
  background-color:#E9FBFF;
  }
  
  .time_card_2{
- padding-left: 35%;
+ padding-left: 0;
  padding-top: 3%;
  padding-bottom:3%;
  background-color:#E7FFE9;
@@ -178,17 +178,15 @@ padding-bottom: 3.5em;
  
  
  #log{
- display:inline-block;
- float:left;
- margin-left: 15%;
- margin-top: 3%;
+
+ margin-left: 0;
+ margin-top: 0;
  font-size: 1.4em;
  font-weight: 500;
  }
  
  #date{
- display:inline-block;
- margin-left:-7%;
+ margin-left:0;
  margin-bottom: 0;
  font-size: 1.6em;
  
@@ -201,18 +199,14 @@ padding-bottom: 3.5em;
 
 .cancel_icon{
 width:1.8em;
-margin-top: -2em;
 display: inline-block;
-margin-right:25%;
-float:right;
+
 }
 
 .edit_icon{
 width:1.8em;
-margin-top: -7em;
 display: inline-block;
-margin-right:25%;
-float:right;
+margin-top:1em;
 }
 
 #the_time, #message{
@@ -235,10 +229,6 @@ font-size: 1.3em;
 margin-top: .4em;
 }
 
-.time_card_wrapper{
-width:60%;
-margin-left:-5%;
-}
  
  
  /* ***********************************************************   Signup    **********************************************************  */
