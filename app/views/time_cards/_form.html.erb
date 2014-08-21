@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :time_started %><br>
-    <%= f.time_select :time_started %>
+    <%= f.time_select :time_started, {ampm: true}%>
   </div>
   <div class="field">
     <%= f.label :time_stopped %><br>
-    <%= f.time_select :time_stopped %>
+    <%= f.time_select :time_stopped, {ampm: true} %>
   </div>
   <div class="field">
     <%= f.label :date %><br>

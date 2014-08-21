@@ -1,5 +1,12 @@
 class CookiesController < ApplicationController
   def new
+	unless flash[:notice]
+		flash[:notice] = {:class => "login_notice", :body => "To track your time, I need to know who you are."}
+	end
+	
+	if flash[:notice][:body] == "Nice to meet you, I am Hours Logger."
+		flash[:notice] = {:class => "login_notice", :body => "To track your time, I need to know who you are."}
+	end
   end
 
   def create
@@ -17,7 +24,7 @@ class CookiesController < ApplicationController
 
   def destroy
 	cookies.delete :user_id
-	flash[:notice] = {:class => "logged_out", :body => "Logged out"}
+	flash[:notice] = {:class => "logged_out", :body => "Goodbye"}
 	redirect_to login_url
   end
 end

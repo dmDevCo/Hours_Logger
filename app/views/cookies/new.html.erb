@@ -1,39 +1,42 @@
-<script>
-setTimeout(function(){$("#notice").fadeOut()}, 3000);
-</script>
 
 <div class="container">
 
 	<div class="row"> 
-	<h4 id="hours_logger_signup">Hours Logger</h4>
+			<div class="col-xs-1 col-sm-2 col-md-3"></div>
+			<%= image_tag("logo.png", :id => "logo_3", :class => "col-xs-10 col-sm-8 col-md-6") %>
+			<div class="col-xs-1 col-sm-2 col-md-3"></div>
 	</div>
 	
-	<div class="row">
-		<p id="signup_text">Hi, to track your time, I need to know who you are.<br></p>
-	</div>
+
 	<% if notice %>
 	<p id="notice" class="<%= flash[:notice][:class] %>"><%= flash[:notice][:body] %></p>
 	<% end %>
 	
 	<%= form_tag(:id => "new_user") do %>
-		
-	
-  
   
 	<fieldset id="login_form">
-	<div>
-	<%= text_field_tag :name, params[:name], placeholder: "Username", class: "input_1", id: "login_name" %>
+	<div class="row">
+		<div class="col-xs-1 col-sm-3 col-md-4"></div>
+		<%= text_field_tag :name, params[:name], placeholder: "Username", class: "input_1 col-xs-10 col-sm-6 col-md-4", id: "login_name" %>
+		<div class="col-xs-1 col-sm-3 col-md-4"></div>
 	</div>
 	
-	<div>
-	<%= password_field_tag :password, params[:password], placeholder: "Password", class: "input_1" %>
+	<div class="row">
+		<div class="col-xs-1 col-sm-3 col-md-4"></div>
+		<%= password_field_tag :password, params[:password], placeholder: "Password", class: "input_1 col-xs-10 col-sm-6 col-md-4" %>
+		<div class="col-xs-1 col-sm-3 col-md-4"></div>
 	</div>
-	<div>
-	<%= submit_tag "Login", class: "button_2", id: "submit" %>
+	<div class="row">
+		<div class="col-xs-2 col-sm-4"></div>
+		<%= submit_tag "Login", class: "button_2 col-xs-8 col-sm-4", id: "submit" %>
+		<div class="col-xs-2 col-sm-4"></div>
 	</div>
 	</fieldset>
 <% end %>
 
+<div id="sign_up_wrapper">
+	<p id="new">New?</p> <a href="/signup" id="signup_link">Signup</a>
+</div>
 	
 </div>
 

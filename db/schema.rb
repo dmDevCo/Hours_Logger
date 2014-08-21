@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815021357) do
+ActiveRecord::Schema.define(version: 20140820153122) do
 
   create_table "time_cards", force: true do |t|
-    t.time     "time_started"
-    t.time     "time_stopped"
+    t.datetime "time_started"
+    t.datetime "time_stopped"
     t.date     "date"
     t.string   "message"
     t.datetime "created_at"

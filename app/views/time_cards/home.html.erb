@@ -1,15 +1,49 @@
+<script>
+$( document ).ready(function() {
+if (($.cookie('start_time'))){
+	start = new Date;
+	start = Date.parse($.cookie('start_time'));
+	$('#working').hide();
+	$('#not_working').show();
+	$('#notice').hide();
+	x = window.setInterval(updateTime, 1000);
+	intervalID = x;
+}
+});
+</script>
+
+
 <p id="username"><%= @user.name %></p>
 <a href="/cookies/destroy"><p id="signout">Sign out</p></a>
 
 
 <div class="container">
-		<h1 id="name_home">Hours Logger</h1>
-		<p  id="time">Time Working: <span id="current_time">00:00:00</span></p>
-
+		<div class="row">
+			<div class="col-xs-1 col-sm-3"></div>
+			<%= image_tag("logo.png", :id => "logo_3", :class => "col-xs-10 col-sm-6") %>
+			<div class="col-xs-1 col-sm-3"></div>
+		</div>
+		
+		<% if notice %>
+			<p id="notice" class="<%= flash[:notice][:class] %>"><%= flash[:notice][:body] %></p>
+		<% end %>
+		<br>
+		<div class="col-xs-12 col-md-2"></div>
+		<p  class="col-xs-12 col-md-8" id="time">Time Working: <span id="current_time">00:00:00</span></p>
+		<div class="col-xs-12 col-md-2"></div>
+		
 		<%= render  "confirm" %>
-		<p id="notice"><%= notice %></p>
-		<button class="button" id="working">Start Working</button>
-		<button data-toggle="modal" data-target="#myModal" class="button" id="not_working">Stop Working</button>
-		<%= button_to  "My Stats", stats_path, :class => "button", :id => "stats"%>
+		<div class="row">
+			<div class="col-xs-2 col-sm-4"></div>
+			<button class="button_3 col-xs-8 col-sm-4" id="working">Start Working</button>
+			<button data-toggle="modal" data-target="#myModal" class="button_3 col-xs-8 col-sm-4" id="not_working">Stop Working</button>
+			<div class="col-xs-2 col-sm-4"></div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-2 col-sm-4"></div>
+			<%= button_to  "My Stats", stats_path, :class => "button_3 col-xs-8 col-sm-4", :id => "stats"%>
+			<div class="col-xs-2 col-sm-4"></div>
+		</div>
 
 </div>

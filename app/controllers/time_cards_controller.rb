@@ -8,20 +8,31 @@ class TimeCardsController < ApplicationController
   end
   
   def home
+	user = User.find(cookies[:user_id])
+	@user = user
+	@random_quotes = ["Let's get to work.", "The best time to get it done is NOW!", "Hard work PAYS OFF!", "MORE GRINDING = MORE $$$", "Sleep is for people who are BROKE!", "Ridiculous, SICKENING Work Ethic ... #RSWE", "While you are sleeping, someone else is trying to beat you."]
+  
 	@time_card = TimeCard.new
 	
-	user = User.find(cookies[:user_id])
-		@user = user
+	unless flash[:notice]
+		flash[:notice] = {:class => "login_notice", :body => @random_quotes[Random.rand(7)] }
+	end
+	
+	if notice
+		if flash[:notice][:body] == "To track your time, I need to know who you are."
+			flash[:notice] = {:class => "login_notice", :body => @random_quotes[Random.rand(7)] }
+		end
+	end
 	rescue ActiveRecord::RecordNotFound
 		redirect_to "/login", :alert => "You need to sign in."
 	
-	
 
-	
   end
   
   def stats
-    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(created_at: (Time.now.at_end_of_week-7.day) .. Time.now.at_end_of_week)
+	Time.zone = "Pacific Time (US & Canada)"
+	flash[:notice] = nil
+    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(date: (Time.now.at_end_of_week-7.day) .. Time.now.at_end_of_week)
 	@count=0;
 	@hours_this_week=0;
 	
@@ -32,7 +43,8 @@ class TimeCardsController < ApplicationController
   
   
    def month
-    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(created_at: Time.now.at_beginning_of_month .. Time.now.at_end_of_month)
+   Time.zone = "Pacific Time (US & Canada)"
+    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(date: Time.now.at_beginning_of_month .. Time.now.at_end_of_month)
 	@count=0;
 	@hours_this_month=0;
 	
@@ -44,7 +56,8 @@ class TimeCardsController < ApplicationController
   
   
    def year
-    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(created_at: (Time.now.at_end_of_year-365.day) .. Time.now.at_end_of_year)
+   Time.zone = "Pacific Time (US & Canada)"
+    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(date: (Time.now.at_end_of_year-365.day) .. Time.now.at_end_of_year)
 	@count=0;
 	@hours_this_year=0;
 	
@@ -56,6 +69,7 @@ class TimeCardsController < ApplicationController
   
   
    def all
+   Time.zone = "Pacific Time (US & Canada)"
     @time_cards = TimeCard.where(user_id: cookies[:user_id])
 	@count=0;
 	@hours_all=0;
@@ -79,6 +93,7 @@ class TimeCardsController < ApplicationController
 
   # GET /time_cards/1/edit
   def edit
+	Time.zone = "Pacific Time (US & Canada)"
   end
 
   # POST /time_cards
@@ -91,11 +106,12 @@ class TimeCardsController < ApplicationController
 	
 	@time_card.time_stopped = now
 	@time_card.time_started= (now-params[:total_seconds].to_i)
-	@time_card.date = Date.today
+	@time_card.date = Time.now.in_time_zone("Pacific Time (US & Canada)").to_date
 
     respond_to do |format|
       if @time_card.save
-        format.html { redirect_to "/", notice: 'Time card was successfully created.' }
+		flash[:notice] = {:class => "login_notice", :body => "Got it!  I logged your hours."}
+        format.html { redirect_to "/"}
         format.json { render action: 'show', status: :created, location: @time_card }
       else
         format.html { render action: 'new' }
@@ -107,9 +123,19 @@ class TimeCardsController < ApplicationController
   # PATCH/PUT /time_cards/1
   # PATCH/PUT /time_cards/1.json
   def update
-    respond_to do |format|
-      if @time_card.update(time_card_params)
-        format.html { redirect_to "/", notice: 'Time card was successfully updated.' }
+     respond_to do |format|
+		utc_start	= Time.new(params[:time_card]["date(1i)"].to_i,params[:time_card]["date(2i)"].to_i,params[:time_card]["date(3i)"].to_i, params[:time_card]["time_started(4i)"], params[:time_card]["time_started(5i)"],0, "-07:00")
+		utc_stop	= Time.new(params[:time_card]["date(1i)"].to_i,params[:time_card]["date(2i)"].to_i,params[:time_card]["date(3i)"].to_i, params[:time_card]["time_stopped(4i)"], params[:time_card]["time_stopped(5i)"],0, "-07:00")
+		
+		
+		utc_start = utc_start.in_time_zone("UTC")
+		utc_stop = utc_stop.in_time_zone("UTC")
+		date = Date.new(params[:time_card]["date(1i)"].to_i, params[:time_card]["date(2i)"].to_i, params[:time_card]["date(3i)"].to_i)
+	
+		
+	  if @time_card.update(time_started: utc_start, time_stopped: utc_stop, message: params[:time_card]["message"], date: date )
+		flash[:notice] = {:class => "login_notice", :body => "Successfully updated!"}
+        format.html { redirect_to "/" }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -117,7 +143,7 @@ class TimeCardsController < ApplicationController
       end
     end
   end
-
+ 
   # DELETE /time_cards/1
   # DELETE /time_cards/1.json
   def destroy

@@ -1,22 +1,39 @@
-<a href="http://localhost:3000" id="link_back"><button  id="back">Back</button></a>
+	<div class="row">
+		<a href="http://hourslogger.com/" id="link_back"><button class="col-xs-2"  id="back">Back</button></a>
+		<div class="col-xs-10"></div>
+	</div>
 	
 	<div class="header">
-			<h4 id="hours_logger">Hours Logger</h4>
+		<div class="row">
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<%= image_tag("logo.png", :id => "logo_3", :class => "col-xs-10 col-sm-8 col-lg-4") %>
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+		</div>
 	</div>
 
 
-
+	<div class="row">
 		<div id="menu">
-			<p class="menu_item" ><%= link_to "Week", "/stats" %></p>
-			<p class="menu_item"><%= link_to "Month", "/month" %></p>
-			<p class="menu_item" ><%= link_to "Year", "/year" %></p>
-			<p class="menu_item" id="current">All</p>
+		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<div class="col-xs-10 col-sm-8 col-lg-4">
+			<p class="menu_item col-xs-3" ><%= link_to "Week", "/stats" %></p>
+			<p class="menu_item col-xs-3" ><%= link_to "Month", "/month" %></p>
+			<p class="menu_item col-xs-3" ><%= link_to "Year", "/year" %></p>
+			<p class="menu_item col-xs-3" id="current">All</p>
 		</div>
-			
-			
-			
-		<p id="total">Total: <%=  number_with_precision(@hours_all, :precision => 2) %> hrs</p>
+		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+		</div>
+	</div>
+	
 
+				
+			
+			
+	<div class="row">	
+		<div class="col-xs-1 col-sm-2 col-lg-4"></div>	
+		<p class="col-xs-10 col-sm-8 col-lg-4" id="total">Total: <%=  number_with_precision(@hours_all, :precision => 2) %> hrs</p>
+		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+	</div>
 
 
 
@@ -33,15 +50,6 @@
 						local_stop	= Time.new
 						local_start = time_card.time_started
 						local_stop  = time_card.time_stopped
-						
-						local_start = local_start.localtime
-						local_stop  = local_stop.localtime
-						
-						# Adjust Daylight Savings 
-				
-							local_start = (local_start+3600)
-							local_stop = (local_stop+3600)
-						
 						
 						local_start = local_start.strftime('%l:%M%P')
 						local_stop = local_stop.strftime('%l:%M%P')

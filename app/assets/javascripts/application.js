@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 
 
 $(document).ready(function(){
-setTimeout(function(){$("#notice").fadeOut()}, 3000);
+setTimeout(function(){$("#notice").animate({opacity:0})}, 4000);
 });

@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   end
   
   def signup
+	flash[:notice] = {:class => "login_notice", :body => "Nice to meet you, I am Hours Logger."}
     @user = User.new
   end
 
@@ -29,10 +30,6 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-	cookies[:user_id] = {
-	:value => 2,
-	:expires => 1.week.from_now.utc
-	}
 	
 
     respond_to do |format|
@@ -41,7 +38,8 @@ class UsersController < ApplicationController
 		:value => @user.id,
 		:expires => 1.year.from_now.utc
 		}
-        format.html { redirect_to "/", notice: "Thanks #{@user.name}!  Now you can track your hours." }
+		flash[:notice] = {:class => "login_notice", :body => "Thanks #{@user.name}!  Now you can track your hours."}
+        format.html { redirect_to "/"}
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'signup' }
