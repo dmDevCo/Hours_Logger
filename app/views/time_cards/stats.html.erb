@@ -11,19 +11,20 @@
 		</div>
 	</div>
 
-
-	<div class="row">
-		<div id="menu">
-		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
-			<div class="col-xs-10 col-sm-8 col-lg-4">
-			<p class="menu_item col-xs-3" id="current">Week</p>
-			<p class="menu_item col-xs-3" ><%= link_to "Month", "/month" %></p>
-			<p class="menu_item col-xs-3" ><%= link_to "Year", "/year" %></p>
-			<p class="menu_item col-xs-3" ><%= link_to "All", "/all" %></p>
+	<%= if params[:time] == "stats" %>
+		<div class="row">
+			<div id="menu">
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+				<div class="col-xs-10 col-sm-8 col-lg-4">
+				<p class="menu_item col-xs-3" id="current">Week</p>
+				<p class="menu_item col-xs-3" ><%= link_to "Month", "/month" %></p>
+				<p class="menu_item col-xs-3" ><%= link_to "Year", "/year" %></p>
+				<p class="menu_item col-xs-3" ><%= link_to "All", "/all" %></p>
+			</div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			</div>
 		</div>
-		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
-		</div>
-	</div>
+	<% end %>
 			
 	<div class="row">	
 		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
@@ -32,14 +33,14 @@
 	</div>
 
   
-	<% @time_cards.each do |time_card| %>
+	<% @time_cards.each_with_index do |time_card, index| %>
 	<div class="container">
 	
 		<div class="<%= cycle("time_card" , "time_card_2" ) %>">
 				
 					<div class="row">
 						<div class="col-xs-1"></div>
-						<p class="col-xs-1" id="log"><%= @count = @count+1 %></p>
+						<p class="col-xs-1" id="log"><%= index %></p>
 						<p class="col-xs-9" id = "date"><%= time_card.date.strftime("%A, %h %e %G") %></p>
 						<div class="col-xs-1"></div>
 					</div>
@@ -59,7 +60,7 @@
 					
 				<div class="row">
 					<div class="col-xs-2"></div>
-					<p class="col-xs-8" id="the_time"><%= local_start %> - <%= local_stop %></p>
+					<p class="col-xs-8" id="the_time" data-start-time="<%=  %>" data-stop-time="<%=  %>"><%= local_start %> - <%= local_stop %></p>
 					<%= link_to image_tag("edit.png", :class => "edit_icon"), edit_time_card_path(time_card) %>
 				</div>
 				

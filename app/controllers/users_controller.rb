@@ -14,11 +14,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
-  end
-  
-  def signup
-	flash[:notice] = {:class => "login_notice", :body => "Nice to meet you, I am Hours Logger."}
+	  flash[:notice] = {class: "login_notice", body: "Nice to meet you, I am Hours Logger."}
     @user = User.new
   end
 
@@ -30,16 +26,12 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-	
-
+    
     respond_to do |format|
-     if @user.save
-		cookies[:user_id] = {
-		:value => @user.id,
-		:expires => 1.year.from_now.utc
-		}
-		flash[:notice] = {:class => "login_notice", :body => "Thanks #{@user.name}!  Now you can track your hours."}
-        format.html { redirect_to "/"}
+      if @user.save
+        set_user_cookie(@user)
+    		flash[:notice] = {:class => "login_notice", :body => "Thanks #{@user.name}!  Now you can track your hours."}
+        format.html { redirect_to root_url }
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'signup' }
@@ -53,7 +45,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_url, notice: "#{@user.name} was successfully updated." }
+        format.html { redirect_to users_url, notice: "#{@user.name.present? ? @user.name : 'User' } was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -67,7 +59,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to users_path }
       format.json { head :no_content }
     end
   end
