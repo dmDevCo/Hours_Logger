@@ -14,10 +14,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :require_user
   
-	def current_user
+  
+  def current_user
     @user ||= User.find(cookies[:user_id])
-	end
+  end
   helper_method :current_user
+  
   
   def set_user_cookie(user)
   	cookies[:user_id] = {

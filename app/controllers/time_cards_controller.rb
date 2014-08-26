@@ -4,15 +4,13 @@ class TimeCardsController < ApplicationController
   before_action :set_zone, only: [:month, :year, :all, :edit, :stats]
   
   RANDOM_QUOTES = ["Let's get to work.", "The best time to get it done is NOW!", "Hard work PAYS OFF!", "MORE GRINDING = MORE $$$", "Sleep is for people who are BROKE!", "Ridiculous, SICKENING Work Ethic ... #RSWE", "While you are sleeping, someone else is trying to beat you."]
-
-  # def index
-  #   @time_cards = TimeCard.all
-  # end
+  
+  
+  
+  
   
   def index
-	  @time_card = TimeCard.new
-	
-  	unless flash[:notice]
+	unless flash[:notice]
   		flash[:notice] = {:class => "login_notice", :body => RANDOM_QUOTES[Random.rand(7)] }
   	end
 	
@@ -21,73 +19,76 @@ class TimeCardsController < ApplicationController
   			flash[:notice] = {:class => "login_notice", :body => RANDOM_QUOTES[Random.rand(7)] }
   		end
   	end
-    
+  
+	if !cookies[:user_id].present?
+		flash[:notice] = {:class => "login_notice", :body => "To track your time, I need to know who you are."}
+		redirect_to login_path
+	end
+  
+	@time_card = TimeCard.new
   end
+  
+  
+  
+  
   
   def stats
-	  flash[:notice] = nil
-    @time_cards = current_user.time_cards.where(date: (Time.now.at_end_of_week-7.day) .. Time.now.at_end_of_week)
-	  @count = 0
-	  @hours_this_week = 0
-	
-    @time_cards.each do |time_card|
-  		@hours_this_week = (@hours_this_week+((time_card.time_stopped - time_card.time_started)/3600)).round(2)
-  	end
-  end
-  
-  
-   def month
-    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(date: Time.now.at_beginning_of_month .. Time.now.at_end_of_month)
-	  @count = 0
-	  @hours_this_month = 0
-	
-	  @time_cards.each do |time_card|
-		@hours_this_month = (@hours_this_month+((time_card.time_stopped - time_card.time_started)/3600))
-	end
-  end
-  
-  
-  
-   def year
-    @time_cards = TimeCard.where(user_id: cookies[:user_id]).where(date: (Time.now.at_end_of_year-365.day) .. Time.now.at_end_of_year)
-	  @count = 0
-    @hours_this_year = 0
-	
-	@time_cards.each do |time_card|
-		@hours_this_year = (@hours_this_year+((time_card.time_stopped - time_card.time_started)/3600))
-	end
-  end
-  
-  
-  
-   def all
-    @time_cards = TimeCard.where(user_id: cookies[:user_id])
-	  @count = 0
-	  @hours_all = 0
-	
-	@time_cards.each do |time_card|
-		@hours_all = (@hours_all+((time_card.time_stopped - time_card.time_started)/3600))
-	end
-  end
+	@total_hours = 0
 
-  
+	if params[:time] == "stats"
+		flash[:notice] = nil
+		@time_cards = current_user.time_cards.where(date: (Time.now.at_end_of_week-8.day) .. Time.now.at_end_of_week-1.day)
+	
+		@time_cards.each do |time_card|
+			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600)).round(2)
+		end
+	end
+	
+	if params[:time] == "month"
+		@time_cards = current_user.time_cards.where(date: Time.now.at_beginning_of_month .. Time.now.at_end_of_month)
+	
+		@time_cards.each do |time_card|
+			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
+		  end
+	end
 
-  # GET /time_cards/1
-  # GET /time_cards/1.json
+	if params[:time] == "year"
+		@time_cards = current_user.time_cards.where(date: (Time.now.at_end_of_year-365.day) .. Time.now.at_end_of_year)
+		
+		@time_cards.each do |time_card|
+			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
+		end
+	end
+
+	if params[:time] == "all"
+		  @time_cards = current_user.time_cards.all
+		
+		@time_cards.each do |time_card|
+			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
+		end
+	end
+  end
+  
+  
+  
+  
   def show
   end
 
-  # GET /time_cards/new
+
   def new
     @time_card = TimeCard.new
   end
 
-  # GET /time_cards/1/edit
+  
   def edit
   end
 
-  # POST /time_cards
-  # POST /time_cards.json
+  
+  
+  
+  
+  
   def create
     now = Time.now
     @time_card = TimeCard.new(time_card_params)
@@ -110,12 +111,26 @@ class TimeCardsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /time_cards/1
-  # PATCH/PUT /time_cards/1.json
+
+  
+  
+  
+  
   def update
     respond_to do |format|
-  		utc_start	= Time.new(params[:time_card]["date(1i)"].to_i,params[:time_card]["date(2i)"].to_i,params[:time_card]["date(3i)"].to_i, params[:time_card]["time_started(4i)"], params[:time_card]["time_started(5i)"],0, "-07:00")
-  		utc_stop	= Time.new(params[:time_card]["date(1i)"].to_i,params[:time_card]["date(2i)"].to_i,params[:time_card]["date(3i)"].to_i, params[:time_card]["time_stopped(4i)"], params[:time_card]["time_stopped(5i)"],0, "-07:00")
+  		utc_start = Time.new(params[:time_card]["date(1i)"].to_i,
+							params[:time_card]["date(2i)"].to_i,
+							params[:time_card]["date(3i)"].to_i, 
+							params[:time_card]["time_started(4i)"], 
+							params[:time_card]["time_started(5i)"],
+							0, "-07:00")
+							   
+  		utc_stop = Time.new(params[:time_card]["date(1i)"].to_i,
+							params[:time_card]["date(2i)"].to_i,
+							params[:time_card]["date(3i)"].to_i, 
+							params[:time_card]["time_stopped(4i)"],
+							params[:time_card]["time_stopped(5i)"],
+							0, "-07:00")
 		
 		
   		utc_start = utc_start.in_time_zone("UTC")
@@ -134,8 +149,11 @@ class TimeCardsController < ApplicationController
     end
   end
  
-  # DELETE /time_cards/1
-  # DELETE /time_cards/1.json
+
+ 
+ 
+ 
+ 
   def destroy
     @time_card.destroy
     respond_to do |format|
@@ -144,18 +162,24 @@ class TimeCardsController < ApplicationController
     end
   end
 
+  
+  
+  
+  
+  
+  
 private
   
   def set_zone
     Time.zone = "Pacific Time (US & Canada)"
   end
   
-  # Use callbacks to share common setup or constraints between actions.
+
   def set_time_card
     @time_card = TimeCard.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+
   def time_card_params
     params.require(:time_card).permit(:time_started, :time_stopped, :date, :message)
   end

@@ -1,5 +1,5 @@
 	<div class="row">
-		<a href="http://hourslogger.com/" id="link_back"><button class="col-xs-2"  id="back">Back</button></a>
+		<a href="/" id="link_back"><button class="col-xs-2"  id="back">Back</button></a>
 		<div class="col-xs-10"></div>
 	</div>
 		
@@ -11,24 +11,74 @@
 		</div>
 	</div>
 
-	<%= if params[:time] == "stats" %>
+	<% if params[:time] == "stats" %>
 		<div class="row">
 			<div id="menu">
 			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
 				<div class="col-xs-10 col-sm-8 col-lg-4">
 				<p class="menu_item col-xs-3" id="current">Week</p>
-				<p class="menu_item col-xs-3" ><%= link_to "Month", "/month" %></p>
-				<p class="menu_item col-xs-3" ><%= link_to "Year", "/year" %></p>
-				<p class="menu_item col-xs-3" ><%= link_to "All", "/all" %></p>
+				<p class="menu_item col-xs-3" ><%= link_to "Month", time_cards_by_path(:month) %></p>
+				<p class="menu_item col-xs-3" ><%= link_to "Year", time_cards_by_path(:year) %></p>
+				<p class="menu_item col-xs-3" ><%= link_to "All", time_cards_by_path(:all) %></p>
 			</div>
 			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
 			</div>
 		</div>
 	<% end %>
+	
+	
+	<% if params[:time] == "month" %>
+		<div class="row">
+			<div id="menu">
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+				<div class="col-xs-10 col-sm-8 col-lg-4">
+				<p class="menu_item col-xs-3" ><%= link_to "Week", time_cards_by_path(:stats) %></p>
+				<p class="menu_item col-xs-3" id="current">Month</p>
+				<p class="menu_item col-xs-3" ><%= link_to "Year", time_cards_by_path(:year) %></p>
+				<p class="menu_item col-xs-3" ><%= link_to "All", time_cards_by_path(:all) %></p>
+			</div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			</div>
+		</div>
+	<% end %>
+	
+	
+	<% if params[:time] == "year" %>
+		<div class="row">
+			<div id="menu">
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+				<div class="col-xs-10 col-sm-8 col-lg-4">
+				<p class="menu_item col-xs-3" ><%= link_to "Week", time_cards_by_path(:stats) %></p>
+				<p class="menu_item col-xs-3" ><%= link_to "Month", time_cards_by_path(:month) %></p>
+				<p class="menu_item col-xs-3" id="current">Year</p>
+				<p class="menu_item col-xs-3" ><%= link_to "All", time_cards_by_path(:all) %></p>
+			</div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			</div>
+		</div>
+	<% end %>
+	
+	
+	<% if params[:time] == "all" %>
+<div class="row">
+		<div id="menu">
+		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<div class="col-xs-10 col-sm-8 col-lg-4">
+			<p class="menu_item col-xs-3" ><%= link_to "Week", time_cards_by_path(:stats) %></p>
+			<p class="menu_item col-xs-3" ><%= link_to "Month", time_cards_by_path(:month) %></p>
+			<p class="menu_item col-xs-3" ><%= link_to "Year", time_cards_by_path(:year) %></p>
+			<p class="menu_item col-xs-3" id="current">All</p>
+		</div>
+		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+		</div>
+	</div>
+	<% end %>
+	
+	
 			
 	<div class="row">	
 		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
-		<p class="col-xs-10 col-sm-8 col-lg-4" id="total">Total: <%=  number_with_precision(@hours_this_week, :precision => 2) %> hrs</p>
+		<p class="col-xs-10 col-sm-8 col-lg-4" id="total">Total: <%=  number_with_precision(@total_hours, :precision => 2) %> hrs</p>
 		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
 	</div>
 

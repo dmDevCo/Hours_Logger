@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140820153122) do
+ActiveRecord::Schema.define(version: 20140823195358) do
 
   create_table "time_cards", force: true do |t|
     t.datetime "time_started"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20140820153122) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "password_digest"
   end
 
 end

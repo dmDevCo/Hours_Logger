@@ -8,6 +8,8 @@ gem 'sqlite3'
 
 gem 'haml'
 
+gem 'bcrypt-ruby'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
