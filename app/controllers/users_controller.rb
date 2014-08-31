@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_admin, only: [:show, :edit, :update, :destroy, :index]
 
 
   def index
@@ -12,7 +13,7 @@ class UsersController < ApplicationController
 
 
   def new
-	  flash[:notice] = {class: "login_notice", body: "Nice to meet you, I am Hours Logger."}
+	flash[:notice] = {class: "login_notice", body: "Nice to meet you, I am Hours Logger."}
     @user = User.new
   end
 
@@ -65,6 +66,17 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
+	
+	
+	def check_admin
+		@user = User.find(cookies[:user_id])
+		 unless @user.admin == true
+			redirect_to root_url
+		 end
+		 
+		rescue ActiveRecord::RecordNotFound
+			redirect_to root_url
+	end
 
 
     def user_params

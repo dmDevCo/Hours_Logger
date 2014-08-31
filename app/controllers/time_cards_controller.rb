@@ -32,6 +32,8 @@ class TimeCardsController < ApplicationController
   
   
   
+  
+  
   def stats
 	@total_hours = 0
 
