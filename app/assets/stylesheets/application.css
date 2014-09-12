@@ -26,7 +26,7 @@ padding-bottom: 3.5em;
 
 #logo_3{
 padding:0;
-padding-top:2em;
+padding-top:0;
 padding-bottom: 3.5em;
 }
  
@@ -113,6 +113,46 @@ padding-bottom: 3.5em;
  
  /* ***********************************************************   My Stats    **********************************************************  */
  
+ .week_select{
+ font-size: 1.5em;
+ text-align: center;
+ margin-left: -10px;
+ padding-top:.2em;
+ padding-bottom:.2em;
+ color: #AFAFAF;
+ }
+ 
+ .month_select{
+	display:none;
+ }
+ 
+ .year_select{
+	display:none;
+ }
+ 
+ .week_submit{
+ margin-left: 10px;
+ padding-left: 0;
+ padding-right:0;
+ padding-top: .4em;
+ padding-bottom: .4em;
+ background-color: #0887B4;
+ color: white;
+ border: 2px solid white;
+ }
+ 
+ .right_arrow{
+	margin-top: -1.1em;
+	width: 5em;
+ }
+ 
+  .left_arrow{
+    float:right;
+	margin-right: -1em;
+	margin-top: -1.1em;
+	width: 5em;
+ }
+ 
  .header{
  padding-top: 2%;
  padding-bottom: 1%;
@@ -173,15 +213,15 @@ padding-bottom: 3.5em;
  
  .time_card{
  padding-left: 0;
- padding-top: 3%;
- padding-bottom:3%;
+ padding-top: 0;
+ padding-bottom:1.5em;
  background-color:#E9FBFF;
  }
  
  .time_card_2{
  padding-left: 0;
- padding-top: 3%;
- padding-bottom:3%;
+ padding-top: 0;
+ padding-bottom:1.5em;
  background-color:#E7FFE9;
  }
  
@@ -195,6 +235,7 @@ padding-bottom: 3.5em;
  }
  
  #date{
+ padding-top: 1.5em;
  margin-left:0;
  margin-bottom: 0;
  font-size: 1.6em;
@@ -202,9 +243,27 @@ padding-bottom: 3.5em;
  }
  
 #current{
- color: #EF3B3B;
+ color: #3F3F3F;
+ font-size: 1.7em;
+ margin-top: .3em;
 }
 
+.clients{
+display: inline;
+font-size: 1.2em;
+margin-left: .8em;
+margin-right: .8em;
+line-height: 2em;
+}
+
+#clients_wrapper{
+margin-top: 2em;
+text-align: center;
+}
+
+.hidden_date{
+display:none;
+}
 
 .cancel_icon{
 width:1.8em;
@@ -215,7 +274,7 @@ display: inline-block;
 .edit_icon{
 width:1.8em;
 display: inline-block;
-margin-top:1em;
+margin-top:0;
 }
 
 #the_time, #message{
@@ -224,18 +283,29 @@ display: inline-block;
 
 #the_time{
 font-size: 1.3em;
-margin-top: .5em;
+margin-top: 0em;
+margin-bottom: 0em;
+margin-left: 1em;
 }
 
 #hours{
-font-size: 1.4em;
+font-size: 1.3em;
 margin-bottom:0;
-margin-top: .8em;
+margin-top: 0;
+margin-left: 1em;
 }
 
 #message{
 font-size: 1.3em;
 margin-top: .4em;
+margin-left: 1em;
+}
+
+#client{
+font-size: 1.3em;
+margin-top: 1.5em;
+margin-left: -1em;
+margin-bottom: .8em
 }
 
  

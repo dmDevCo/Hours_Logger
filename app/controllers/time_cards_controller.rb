@@ -36,18 +36,49 @@ class TimeCardsController < ApplicationController
   
   def stats
 	@total_hours = 0
+	@date = Time.new
+	@client = "New"
+
+	
 
 	if params[:time] == "stats"
 		flash[:notice] = nil
-		@time_cards = current_user.time_cards.where(date: (Time.now.at_end_of_week-8.day) .. Time.now.at_end_of_week-1.day)
+		
+		beg_of_week = Time.now.at_end_of_week-8.day+1
+		end_of_week = Time.now.at_end_of_week-1.day+1
+		
+		if params[:week].present?
+			beg_of_week = params[:week]
+			beg_of_week = beg_of_week.to_datetime
+			end_of_week = params[:week]
+			end_of_week = (end_of_week.to_datetime+6.day+1)
+			@time_selected = beg_of_week
+		end
+		
+		@time_cards = current_user.time_cards.where(time_started: beg_of_week .. end_of_week).order("date DESC")
 	
 		@time_cards.each do |time_card|
 			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600)).round(2)
 		end
+		
+		
+
 	end
 	
 	if params[:time] == "month"
-		@time_cards = current_user.time_cards.where(date: Time.now.at_beginning_of_month .. Time.now.at_end_of_month)
+	
+		beg_of_month = Time.now.at_beginning_of_month
+		end_of_month = Time.now.at_end_of_month
+		
+		if params[:month].present?
+			beg_of_month = params[:month]
+			beg_of_month = beg_of_month.to_datetime
+			end_of_month = params[:month]
+			end_of_month = (end_of_month.to_datetime+1.month)
+			@month_selected = beg_of_month
+		end
+	
+		@time_cards = current_user.time_cards.where(date: beg_of_month .. end_of_month).order("date DESC")
 	
 		@time_cards.each do |time_card|
 			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
@@ -55,20 +86,28 @@ class TimeCardsController < ApplicationController
 	end
 
 	if params[:time] == "year"
-		@time_cards = current_user.time_cards.where(date: (Time.now.at_end_of_year-365.day) .. Time.now.at_end_of_year)
+	
+		beg_of_year = Time.now.at_beginning_of_year
+		end_of_year = Time.now.at_end_of_year
+		
+		if params[:year].present?
+			beg_of_year = params[:year]
+			beg_of_year = beg_of_year.to_datetime
+			end_of_year = params[:year]
+			end_of_year = (end_of_year.to_datetime+1.year)
+			@year_selected = beg_of_year
+		end
+		
+		@time_cards = current_user.time_cards.where(date: beg_of_year .. end_of_year).order("date DESC")
 		
 		@time_cards.each do |time_card|
 			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
 		end
 	end
-
-	if params[:time] == "all"
-		  @time_cards = current_user.time_cards.all
+		clients = @time_cards
+		@clients = clients.uniq_by{|s| s.client}
 		
-		@time_cards.each do |time_card|
-			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
-		end
-	end
+		
   end
   
   
@@ -92,15 +131,20 @@ class TimeCardsController < ApplicationController
   
   
   def create
+    # Store the current start and stop time in the users time card
     now = Time.now
     @time_card = TimeCard.new(time_card_params)
     @time_card.user_id = cookies[:user_id]
-	
 	
   	@time_card.time_stopped = now
   	@time_card.time_started= (now-params[:total_seconds].to_i)
   	@time_card.date = Time.now.in_time_zone("Pacific Time (US & Canada)").to_date
 
+	if @time_card.client == ""
+		@time_card.client = "No Client"
+	end
+	@time_card.client = @time_card.client.downcase
+	
     respond_to do |format|
       if @time_card.save
 		flash[:notice] = {:class => "login_notice", :body => "Got it!  I logged your hours."}
@@ -114,7 +158,6 @@ class TimeCardsController < ApplicationController
   end
 
 
-  
   
   
   
@@ -138,9 +181,16 @@ class TimeCardsController < ApplicationController
   		utc_start = utc_start.in_time_zone("UTC")
   		utc_stop = utc_stop.in_time_zone("UTC")
   		date = Date.new(params[:time_card]["date(1i)"].to_i, params[:time_card]["date(2i)"].to_i, params[:time_card]["date(3i)"].to_i)
-	
 		
-  	  if @time_card.update(time_started: utc_start, time_stopped: utc_stop, message: params[:time_card]["message"], date: date )
+		
+		client = params[:time_card]["client"].downcase
+
+		if params[:time_card]["client"] == ""
+		 client = "no client"
+		end
+		
+		
+  	  if @time_card.update(time_started: utc_start, time_stopped: utc_stop, message: params[:time_card]["message"], date: date, client: client )
   		  flash[:notice] = {:class => "login_notice", :body => "Successfully updated!"}
         format.html { redirect_to "/" }
         format.json { head :no_content }
@@ -183,7 +233,7 @@ private
 
 
   def time_card_params
-    params.require(:time_card).permit(:time_started, :time_stopped, :date, :message)
+    params.require(:time_card).permit(:time_started, :time_stopped, :client, :date, :message)
   end
   
 end

@@ -11,68 +11,89 @@
 		</div>
 	</div>
 
-	<% if params[:time] == "stats" %>
-		<div class="row">
+	
+	
+		<div class="row select_1">
 			<div id="menu">
-			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-left.png", :class => "left_arrow") %></div>
 				<div class="col-xs-10 col-sm-8 col-lg-4">
 				<p class="menu_item col-xs-3" id="current">Week</p>
-				<p class="menu_item col-xs-3" ><%= link_to "Month", time_cards_by_path(:month) %></p>
-				<p class="menu_item col-xs-3" ><%= link_to "Year", time_cards_by_path(:year) %></p>
-				<p class="menu_item col-xs-3" ><%= link_to "All", time_cards_by_path(:all) %></p>
+				
+				<form action="/stats" method="post">
+					<select class="week_select col-xs-7" name="week">
+					<% for i in 1..53%>
+						<option value="<%=  Time.now.at_end_of_week-(7*i).day  %>" <% if @time_selected == (Time.now.at_end_of_week-((7*i).day)).to_s  %>selected<% end %>><%=  (Time.now.at_end_of_week-(7*(i-1).day)).strftime("%b %d")  %> - <%=  (Time.now.at_end_of_week-(7*i).day).strftime("%b %d, '%y")  %></option>
+					<% end %>
+					</select>
+					<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+					<%= hidden_field_tag :time, "stats" %>
+					<input class = "col-xs-2 week_submit" type="submit" value="Find">
+				</form>
 			</div>
-			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-right.png", :class => "right_arrow") %></div>
 			</div>
 		</div>
-	<% end %>
-	
-	
-	<% if params[:time] == "month" %>
-		<div class="row">
+		
+		
+		<div class="row month_select select_2">
 			<div id="menu">
-			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-left.png", :class => "left_arrow") %></div>
 				<div class="col-xs-10 col-sm-8 col-lg-4">
-				<p class="menu_item col-xs-3" ><%= link_to "Week", time_cards_by_path(:stats) %></p>
 				<p class="menu_item col-xs-3" id="current">Month</p>
-				<p class="menu_item col-xs-3" ><%= link_to "Year", time_cards_by_path(:year) %></p>
-				<p class="menu_item col-xs-3" ><%= link_to "All", time_cards_by_path(:all) %></p>
+				
+				<form action="/stats" method="post">
+					<select class="week_select col-xs-7" name="month">
+					<% for i in 0..11%>
+						<option value="<%=  (Time.now.at_beginning_of_month-(i*1.month))  %>" <% if @month_selected == (Time.now.at_beginning_of_month-(i*1.month)).to_s  %>selected<% end %>><%=  (Time.now.at_beginning_of_month-(i*1.month)).strftime("%B")  %></option>
+					<% end %>
+					</select>
+					<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+					<%= hidden_field_tag :time, "month" %>
+					<input class = "col-xs-2 week_submit" type="submit" value="Find">
+				</form>
 			</div>
-			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-right.png", :class => "right_arrow") %></div>
 			</div>
 		</div>
-	<% end %>
-	
-	
-	<% if params[:time] == "year" %>
-		<div class="row">
+		
+		
+		<div class="row year_select select_3">
 			<div id="menu">
-			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-left.png", :class => "left_arrow") %></div>
 				<div class="col-xs-10 col-sm-8 col-lg-4">
-				<p class="menu_item col-xs-3" ><%= link_to "Week", time_cards_by_path(:stats) %></p>
-				<p class="menu_item col-xs-3" ><%= link_to "Month", time_cards_by_path(:month) %></p>
 				<p class="menu_item col-xs-3" id="current">Year</p>
-				<p class="menu_item col-xs-3" ><%= link_to "All", time_cards_by_path(:all) %></p>
+				
+				<form action="/stats" method="post">
+					<select class="week_select col-xs-7" name="year">
+					<% for i in 0..4%>
+						<option value="<%=  (((Time.now.at_beginning_of_year)-(i*1.year))+10.day)  %>" <% if @year_selected == (((Time.now.at_beginning_of_year)-(i*1.year))+10.day).to_s  %>selected<% end %>><%=  ((Time.now.at_beginning_of_year+10.day)-(i*1.year)).strftime("%Y")  %></option>
+					<% end %>
+					</select>
+					<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+					<%= hidden_field_tag :time, "year" %>
+					<input class = "col-xs-2 week_submit" type="submit" value="Find">
+				</form>
+			</div>
+			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-right.png", :class => "right_arrow") %></div>
+			</div>
+		</div>
+		
+	
+
+	
+	<div class="row">
+			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
+			<div class="col-xs-10 col-sm-8 col-lg-4">
+				<div id="clients_wrapper">
+						<p class="clients">All Clients</p>
+					<% @clients.each do |client| %>
+						<p class="clients"><%= client.client.titleize %></p>
+					<% end %>
+				</div>
 			</div>
 			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
-			</div>
 		</div>
-	<% end %>
-	
-	
-	<% if params[:time] == "all" %>
-<div class="row">
-		<div id="menu">
-		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
-			<div class="col-xs-10 col-sm-8 col-lg-4">
-			<p class="menu_item col-xs-3" ><%= link_to "Week", time_cards_by_path(:stats) %></p>
-			<p class="menu_item col-xs-3" ><%= link_to "Month", time_cards_by_path(:month) %></p>
-			<p class="menu_item col-xs-3" ><%= link_to "Year", time_cards_by_path(:year) %></p>
-			<p class="menu_item col-xs-3" id="current">All</p>
-		</div>
-		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
-		</div>
-	</div>
-	<% end %>
+
 	
 	
 			
@@ -82,32 +103,53 @@
 		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
 	</div>
 
-  
-	<% @time_cards.each_with_index do |time_card, index| %>
-	<div class="container">
+    
+	<% @time_cards.each do |time_card| %>
 	
-		<div class="<%= cycle("time_card" , "time_card_2" ) %>">
+	
+		<% if (time_card.date != @date) %>
+		<div class="container">
+			<% 
+				@date = time_card.date
+				@current_class = cycle("time_card" , "time_card_2" )
+				@client = "New"
+			%>
+			<div class="<%= @current_class %>">
+					
+						<div class="row">
+							<div class="col-xs-1"></div>
+							<p class="col-xs-10" id = "date"><%= time_card.date.strftime("%A, %h %e %G") %></p>
+							<div class="col-xs-1"></div>
+						</div>
+
+		<% else %>
+			<div class="container">
+				<div class="<%= @current_class %>">
+		<% end %>	
+					
+					
+					
+			<% 
+				local_start	= Time.new
+				local_stop	= Time.new
+				local_start = time_card.time_started
+				local_stop  = time_card.time_stopped
+						
+						
+				local_start_1 = local_start
+				local_stop_1 = local_stop
+				local_start = local_start.strftime('%l:%M%P')
+				local_stop = local_stop.strftime('%l:%M%P')
+			%>
 				
-					<div class="row">
-						<div class="col-xs-1"></div>
-						<p class="col-xs-1" id="log"><%= index %></p>
-						<p class="col-xs-9" id = "date"><%= time_card.date.strftime("%A, %h %e %G") %></p>
-						<div class="col-xs-1"></div>
-					</div>
-					
-					<% 
-						local_start	= Time.new
-						local_stop	= Time.new
-						local_start = time_card.time_started
-						local_stop  = time_card.time_stopped
-						
-						
-						local_start_1 = local_start
-						local_stop_1 = local_stop
-						local_start = local_start.strftime('%l:%M%P')
-						local_stop = local_stop.strftime('%l:%M%P')
-					%>
-					
+			<% if (time_card.client.downcase != @client) %>
+				<div class="row">
+					<div class="col-xs-2"></div>
+					<p class="col-xs-8" id="client"><%= time_card.client.titleize %></p>
+				</div>
+				<% @client = time_card.client.downcase %>
+			<% end %>
+				
 				<div class="row">
 					<div class="col-xs-2"></div>
 					<p class="col-xs-8" id="the_time" data-start-time="<%=  %>" data-stop-time="<%=  %>"><%= local_start %> - <%= local_stop %></p>
@@ -121,11 +163,12 @@
 				</div>
 				
 				<div class="row">
-				<div class="col-xs-2"></div>
-				<p class="col-xs-7" id="message"><%= time_card.message %></p>
-				<div class="col-xs-1"></div>
-				<%= link_to image_tag("delete.png", :class => "cancel_icon"), time_card, method: :delete, data: { confirm: "Are you sure you want to delete this time card?" } %>
+					<div class="col-xs-2"></div>
+					<p class="col-xs-7" id="message"><%= time_card.message %></p>
+					<div class="col-xs-1"></div>
+					<%= link_to image_tag("delete.png", :class => "cancel_icon"), time_card, method: :delete, data: { confirm: "Are you sure you want to delete this time card?" } %>
 				</div>
+				
 		</div>
 	</div>
 	<% end %>

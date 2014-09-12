@@ -7,23 +7,30 @@
 					<h4 class="modal-title" id="myModalLabel">Clocking Out?</h4>
 				  </div>
 				  
-				  <%= form_for(@time_card, html: { id: "myForm" } ) do |f| %>
+
 				  
-					  <div class="modal-body">
+					<div class="modal-body">
 							Time: <span id="current_time_2">00:00:00</span> <br> <br>
 						
-							 <% if @time_card.errors.any? %>
-								<div id="error_explanation">
-								  <h2><%= pluralize(@time_card.errors.count, "error") %> prohibited this time_card from being saved:</h2>
+						
+						
+							 <%= form_for(@time_card, html: { id: "myForm" } ) do |f| %>
+								 <% if @time_card.errors.any? %>
+									<div id="error_explanation">
+									  <h2><%= pluralize(@time_card.errors.count, "error") %> prohibited this time_card from being saved:</h2>
 
-								  <ul>
-								  <% @time_card.errors.full_messages.each do |msg| %>
-									<li><%= msg %></li>
+									  <ul>
+									  <% @time_card.errors.full_messages.each do |msg| %>
+										<li><%= msg %></li>
+									  <% end %>
+									  </ul>
+									</div>
 								  <% end %>
-								  </ul>
-								</div>
-						    <% end %>
-						  
+								  
+						    <div class="field">
+							<%= f.label "Who did you work for?" %><br>
+							<%= f.text_field :client %>
+							</div>
 						  
 							<div class="field">
 							<%= f.label "What did you do?" %><br>

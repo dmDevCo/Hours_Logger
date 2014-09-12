@@ -25,7 +25,7 @@ a {
   }
   &:hover {
     color: #fff;
-    background-color: #000;
+    background-color: transparent;
   }
 }
 
@@ -40,20 +40,18 @@ div {
 }
 
 .field_with_errors {
-  padding: 0;
-  background-color: white;
-  display: block;
+  padding: 2px;
+  background-color: red;
+  display: table;
 }
 
 #error_explanation {
-  text-align: center;
-  border: 2px solid #FF3F3F;
-  padding-top: .9em;
-  padding-bottom: .7em;
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
   margin-bottom: 20px;
-  background-color: #FF3F3F;
-  width:70%;
-  margin-left:15%;
+  background-color: #f0f0f0;
   h2 {
     text-align: left;
     font-weight: bold;
