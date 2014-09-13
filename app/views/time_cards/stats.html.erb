@@ -13,6 +13,13 @@
 
 	
 	
+	
+	
+	
+	<!--  ***********************************************      Week Select     ***********************************************   -->
+	
+	
+	
 		<div class="row select_1">
 			<div id="menu">
 			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-left.png", :class => "left_arrow") %></div>
@@ -22,7 +29,8 @@
 				<form action="/stats" method="post">
 					<select class="week_select col-xs-7" name="week">
 					<% for i in 1..53%>
-						<option value="<%=  Time.now.at_end_of_week-(7*i).day  %>" <% if @time_selected == (Time.now.at_end_of_week-((7*i).day)).to_s  %>selected<% end %>><%=  (Time.now.at_end_of_week-(7*(i-1).day)).strftime("%b %d")  %> - <%=  (Time.now.at_end_of_week-(7*i).day).strftime("%b %d, '%y")  %></option>
+						<option value="<%=  Time.now.at_end_of_week-(7*i).day  %>" <% if @time_selected == (Time.now.at_end_of_week-((7*i).day)).to_s  %><% @time = "stats" 
+						%>selected<% end %>><%=  (Time.now.at_end_of_week-(7*(i-1).day)).strftime("%b %d")  %> - <%=  (Time.now.at_end_of_week-(7*i).day).strftime("%b %d, '%y")  %></option>
 					<% end %>
 					</select>
 					<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
@@ -35,6 +43,18 @@
 		</div>
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+	<!--  ***********************************************      Month Select     ***********************************************   -->
+		
+
+		
 		<div class="row month_select select_2">
 			<div id="menu">
 			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-left.png", :class => "left_arrow") %></div>
@@ -44,7 +64,9 @@
 				<form action="/stats" method="post">
 					<select class="week_select col-xs-7" name="month">
 					<% for i in 0..11%>
-						<option value="<%=  (Time.now.at_beginning_of_month-(i*1.month))  %>" <% if @month_selected == (Time.now.at_beginning_of_month-(i*1.month)).to_s  %>selected<% end %>><%=  (Time.now.at_beginning_of_month-(i*1.month)).strftime("%B")  %></option>
+						<option value="<%= (Time.now.at_beginning_of_month-(i*1.month))  %>" <% if @month_selected == (Time.now.at_beginning_of_month-(i*1.month)).to_s  %><% @time = "month" 
+					@month_selected_1 = 1
+					%>selected<% end %>><%=  (Time.now.at_beginning_of_month-(i*1.month)).strftime("%B")  %></option>
 					<% end %>
 					</select>
 					<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
@@ -57,6 +79,29 @@
 		</div>
 		
 		
+		<% if @month_selected_1 == 1  %>
+			<script>
+				$(document).ready(function(){
+					$('.select_1').hide();
+					$('.select_2').hide();
+					$('.select_3').hide();
+					$('.select_2').show();
+					select = 2;
+				});
+			</script>
+		<% end %>
+		
+		
+		
+		
+		
+		
+		
+		
+	<!--  ***********************************************      Year Select     ***********************************************   -->
+		
+		
+		
 		<div class="row year_select select_3">
 			<div id="menu">
 			<div class="col-xs-1 col-sm-2 col-lg-4"><%= image_tag("orange-arrow-left.png", :class => "left_arrow") %></div>
@@ -66,7 +111,16 @@
 				<form action="/stats" method="post">
 					<select class="week_select col-xs-7" name="year">
 					<% for i in 0..4%>
-						<option value="<%=  (((Time.now.at_beginning_of_year)-(i*1.year))+10.day)  %>" <% if @year_selected == (((Time.now.at_beginning_of_year)-(i*1.year))+10.day).to_s  %>selected<% end %>><%=  ((Time.now.at_beginning_of_year+10.day)-(i*1.year)).strftime("%Y")  %></option>
+						<option value="<%=  (((Time.now.at_beginning_of_year)-(i*1.year))+10.day)  %>" 
+						<% if @year_selected == (((Time.now.at_beginning_of_year)-(i*1.year))+10.day).to_s  
+							@year_selected_1 = 1
+						%>
+							selected
+						<% end %>>
+						
+							<%=  ((Time.now.at_beginning_of_year+10.day)-(i*1.year)).strftime("%Y")  %>
+							
+						</option>
 					<% end %>
 					</select>
 					<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
@@ -78,23 +132,33 @@
 			</div>
 		</div>
 		
+		<% if @year_selected_1 == 1  %>
+			<script>
+			$(document).ready(function(){
+				$('.select_1').hide();
+				$('.select_2').hide();
+				$('.select_3').hide();
+				$('.select_3').show();
+				select = 3;
+				});
+			</script>
+		<% end %>
 	
-
+<!--  ***********************************************      Displaying the current clients     ***********************************************   -->
 	
 	<div class="row">
 			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
 			<div class="col-xs-10 col-sm-8 col-lg-4">
 				<div id="clients_wrapper">
-						<p class="clients">All Clients</p>
-					<% @clients.each do |client| %>
-						<p class="clients"><%= client.client.titleize %></p>
+						<p class="clients">All</p>
+					<% @clients.each do |time_card| %>
+						<p class="clients"><%= time_card.client.titleize %></p>
 					<% end %>
 				</div>
 			</div>
 			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
 		</div>
 
-	
 	
 			
 	<div class="row">	

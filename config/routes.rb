@@ -17,12 +17,16 @@ HoursLogger::Application.routes.draw do
   # get '/stats' => 'time_cards#stats'
   
   
-  
-  post '/stats' => 'time_cards#stats'
+ 
+  post '/stats' => 'time_cards#stats', as: 'stats'
   post '/' => 'time_cards#home'
   post '/cookies/new' => 'cookies#create'
   post '/login', to: 'sessions#create'
   
+  get '/stats' => 'time_cards#stats'
+  
+  
   root to: 'time_cards#index'
   
+
 end

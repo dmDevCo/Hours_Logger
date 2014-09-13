@@ -38,9 +38,34 @@ class TimeCardsController < ApplicationController
 	@total_hours = 0
 	@date = Time.new
 	@client = "New"
+	@time = "stats"
+	@month_selected_1 = 0
+	@year_selected_1 = 0
 
 	
-
+	if !params[:time].present?
+		flash[:notice] = nil
+		
+		beg_of_week = Time.now.at_end_of_week-8.day+1
+		end_of_week = Time.now.at_end_of_week-1.day+1
+		
+		if params[:week].present?
+			beg_of_week = params[:week]
+			beg_of_week = beg_of_week.to_datetime
+			end_of_week = params[:week]
+			end_of_week = (end_of_week.to_datetime+6.day+1)
+			@time_selected = beg_of_week
+		end
+		
+		@time_cards = current_user.time_cards.where(time_started: beg_of_week .. end_of_week).order("date DESC")
+	
+		@time_cards.each do |time_card|
+			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600)).round(2)
+		end
+		
+	end
+	
+	
 	if params[:time] == "stats"
 		flash[:notice] = nil
 		
@@ -61,9 +86,10 @@ class TimeCardsController < ApplicationController
 			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600)).round(2)
 		end
 		
-		
-
 	end
+	
+	
+	
 	
 	if params[:time] == "month"
 	
@@ -84,8 +110,12 @@ class TimeCardsController < ApplicationController
 			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
 		  end
 	end
+	
+	
+	
+	
 
-	if params[:time] == "year"
+  if params[:time] == "year"
 	
 		beg_of_year = Time.now.at_beginning_of_year
 		end_of_year = Time.now.at_end_of_year
@@ -106,8 +136,6 @@ class TimeCardsController < ApplicationController
 	end
 		clients = @time_cards
 		@clients = clients.uniq_by{|s| s.client}
-		
-		
   end
   
   
