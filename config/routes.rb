@@ -1,5 +1,6 @@
 HoursLogger::Application.routes.draw do
   
+  get '/time_cards/email' => 'time_cards#email'
   get '/login', to: 'sessions#new', as: 'login'
   get '/logout', to: 'sessions#destroy', as: 'logout'
   resources :sessions, only: [:create]
@@ -22,11 +23,11 @@ HoursLogger::Application.routes.draw do
   post '/' => 'time_cards#home'
   post '/cookies/new' => 'cookies#create'
   post '/login', to: 'sessions#create'
-  
+  post '/time_cards/email' => 'time_cards#email'
   get '/stats' => 'time_cards#stats'
   
-  
   root to: 'time_cards#index'
+  
   
 
 end

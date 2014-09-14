@@ -101,6 +101,10 @@ padding-bottom: 3.5em;
  text-align:center;
  }
  
+ #myModalLabel{
+ font-size: 2em;
+ }
+ 
  #my_modal_dialog{
 	width:40%;
  }
@@ -112,6 +116,7 @@ padding-bottom: 3.5em;
  }
  
  /* ***********************************************************   My Stats    **********************************************************  */
+ 
  
  .week_select{
  font-size: 1.5em;
@@ -140,18 +145,23 @@ padding-bottom: 3.5em;
  color: white;
  border: 2px solid white;
  }
- 
- .right_arrow{
-	margin-top: -1.1em;
-	width: 5em;
- }
- 
-  .left_arrow{
+
+
+ .left_arrow{
     float:right;
 	margin-right: -1em;
 	margin-top: -1.1em;
 	width: 5em;
- }
+	height: 5em;
+}
+
+.right_arrow{
+	margin-top: -1.1em;
+	width: 5em;
+	height: 5em;
+}
+
+
  
  .header{
  padding-top: 2%;
@@ -308,6 +318,56 @@ margin-left: -1em;
 margin-bottom: .8em
 }
 
+#current_time_3{
+margin-top: 1em;
+font-size: 1.4em;
+color: #0AAF66;
+}
+
+#current_time_4{
+color: #0AAF66;
+}
+
+
+
+.input_modal{
+    text-align:left;
+	margin-top: .2em;
+	margin-bottom: .6em;
+	margin-left: 0;
+	line-height:2em;
+	font-size: 1.2em;
+	padding-left: 1em;
+	padding-right: 3em;
+}
+
+#edit_time{
+display:none;
+margin-bottom: 3em;
+}
+
+.input_3{
+    text-align:center;
+	color:#4F4F4F;
+	margin-top: .2em;
+	margin-bottom: 0 !important;
+	margin-left: 0;
+	line-height:2em;
+	font-size: 1.2em;
+}
+
+#when_did{
+font-size: 1.1em;
+text-align:center;
+margin-left: -6.5em;
+margin-bottom: .6em;
+}
+
+#no_way{
+font-size: 1.5em;
+margin-bottom: 2.4em;
+font-family: Geneva, Tahoma, Verdana, sans-serif;
+}
  
  
  /* ***********************************************************   Signup    **********************************************************  */

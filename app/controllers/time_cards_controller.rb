@@ -138,9 +138,6 @@ class TimeCardsController < ApplicationController
 		@clients = clients.uniq_by{|s| s.client}
   end
   
-  
-  
-  
   def show
   end
 
@@ -153,13 +150,23 @@ class TimeCardsController < ApplicationController
   def edit
   end
 
-  
-  
-  
+  def email
+	@user = current_user
+	@time_started = cookies[:start_time]
+	Notifier.timer_running(@user, @time_started).deliver
+	
+	
+    respond_to do |format|
+      format.json { render json: "success"}
+    end
+  end
+ 
   
   
   def create
     # Store the current start and stop time in the users time card
+	
+	
     now = Time.now
     @time_card = TimeCard.new(time_card_params)
     @time_card.user_id = cookies[:user_id]
@@ -172,6 +179,23 @@ class TimeCardsController < ApplicationController
 		@time_card.client = "No Client"
 	end
 	@time_card.client = @time_card.client.downcase
+	
+	if params[:end_time] == "true"
+		utc_stop = Time.new(params[:time_card]["date(1i)"].to_i,
+							params[:time_card]["date(2i)"].to_i,
+							params[:time_card]["date(3i)"].to_i, 
+							params[:time_card]["time_stopped(4i)"],
+							params[:time_card]["time_stopped(5i)"],
+							0, "-07:00")
+							
+		utc_stop = utc_stop.in_time_zone("UTC")
+		@time_card.time_stopped = utc_stop
+		
+		utc_start = params[:start_time]
+		utc_start = utc_start.to_datetime.in_time_zone("UTC")
+		@time_card.time_started = utc_start
+		
+	end
 	
     respond_to do |format|
       if @time_card.save

@@ -10,7 +10,7 @@
 
 				  
 					<div class="modal-body">
-							Time: <span id="current_time_2">00:00:00</span> <br> <br>
+							<p id="current_time_3"><span id="current_time_2">Time: 00:00:00</span></p> <br>
 						
 						
 						
@@ -26,17 +26,35 @@
 									  </ul>
 									</div>
 								  <% end %>
+							
+							<div id="edit_time">
+								<p id= "no_way">Did you really work <span id="current_time_4">00:00:00</span>?!?</p>
+								<p id="when_did">What time did you stop?</p>
+									
+									<div class="field input_3">
+										<%= f.date_select :date %>
+									</div>
+									
+									<div class="field input_3">
+										<%= f.time_select :time_stopped, {ampm: true} %>
+									</div>
+									
+									<div id="for_hidden"></div>
+									<div id="for_hidden_1"></div>
+									  
+
+							</div>
 								  
 						    <div class="field">
-							<%= f.label "Who did you work for?" %><br>
-							<%= f.text_field :client %>
+							<%= f.text_field :client, placeholder: "Client Name", class: "input_modal" %>
 							</div>
 						  
 							<div class="field">
-							<%= f.label "What did you do?" %><br>
-							<%= f.text_field :message %>
+							<%= f.text_field :message, placeholder: "Task ... ", class: "input_modal" %>
 							</div>
 					  </div>
+				
+					 
 					  
 					  
 					  <div class="modal-footer">

@@ -4,8 +4,34 @@
 	var seconds = 0;
 	var intervalID=0;
 	var x = 0;
+	var count = 0;
+	var flag = 0;
+	
+
 	
 $(document).ready(function(){
+	
+
+
+  $('.right_arrow').on({
+    'mouseover' : function() {
+      $(this).attr('src','/assets/orange-arrow-right_dark.png');
+    },
+    mouseout : function() {
+  $(this).attr('src','/assets/orange-arrow-right.png');
+    }
+  });
+  
+   $('.left_arrow').on({
+    'mouseover' : function() {
+      $(this).attr('src','/assets/orange-arrow-left_dark.png');
+    },
+    mouseout : function() {
+  $(this).attr('src','/assets/orange-arrow-left.png');
+    }
+  });
+  
+  
 	$('#working').unbind().click(function() {
 		start = new Date;
 		x = window.setInterval(updateTime, 1000);
@@ -22,7 +48,13 @@ $(document).ready(function(){
 		form.elements['total_seconds'].value = total_seconds;
 	});	
 	
+	
 	$('#cancel').unbind().click(function() {
+		x = window.setInterval(updateTime, 1000);
+		intervalID = x;
+	});	
+	
+	$('.close').unbind().click(function() {
 		x = window.setInterval(updateTime, 1000);
 		intervalID = x;
 	});	
@@ -43,6 +75,7 @@ $(document).ready(function(){
 	});	
 });
 	
+	
 
 
 
@@ -52,6 +85,7 @@ function updateTime(){
 			seconds = total_seconds;
 			
 			var hours = Math.floor(total_seconds/3600);
+			var hours_1 = hours;
 			hours = (hours<10 ? "0" : "")+ hours;
 			seconds = seconds % 3600;
 			
@@ -66,5 +100,31 @@ function updateTime(){
 			var currentTimeString = hours + ":" + minutes + ":" + seconds;
 			
 			document.getElementById("current_time").innerHTML = currentTimeString;
-			document.getElementById("current_time_2").innerHTML = currentTimeString;
+			document.getElementById("current_time_2").innerHTML = "Time: "+currentTimeString;
+			
+			if (hours_1 > 5){
+				$('#edit_time').show();
+				$('#current_time_3').hide();
+				document.getElementById("current_time_4").innerHTML = currentTimeString;
+				$('#for_hidden').html(" <input type='hidden' name='end_time' value='true'> ");
+				$('#for_hidden_1').html(" <input type='hidden' name='start_time' value='"+$.cookie('start_time')+"'> ");
+			
+			if ($("#div1").text() == "Email sent"){
+				flag = 1;
+			}
+			
+				if (flag==0){
+				    $.ajax({type: "POST", 
+					url:"time_cards/email",
+					success:function(){
+					$("#div1").html("Email sent");
+					}});
+					
+					while (count<50){
+					count = count + 1;
+					}
+					
+					flag = 1;
+				}
+			}
 		}

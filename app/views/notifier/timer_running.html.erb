@@ -1,0 +1,25 @@
+<h4>Hi <%= @user.name %>,</h4>
+
+<p>We just wanted to make sure you know timer is still running.</p>
+
+<p>You started your timer:<br>
+<%= @time_started.to_datetime.strftime("%l:%M%P") %> on <%= @time_started.to_datetime.strftime("%A, %h %e") %>
+</p>
+
+<p>
+Our efforts are to HELP you ACCURATELY track your time, so we emailed you to make sure you are still working.  
+If you need to fix your timer, you can do it here <a href = "localhost:3000">Fix Timer</a>
+</p>
+
+<p>
+You can change the settings on email notifications from your account settings. 
+</p>
+
+<p>
+Many thanks from Hours Logger,
+Drew, Matt, and George
+</p>
+
+
+
+
