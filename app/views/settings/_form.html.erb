@@ -1,0 +1,37 @@
+<%= form_for(@setting) do |f| %>
+  <% if @setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@setting.errors.count, "error") %> prohibited this setting from being saved:</h2>
+
+      <ul>
+      <% @setting.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :hours_before_email %><br>
+    <%= f.number_field :hours_before_email %>
+  </div>
+  <div class="field">
+    <%= f.label :hours_alert %><br>
+    <%= f.check_box :hours_alert %>
+  </div>
+  <div class="field">
+    <%= f.label :days_before_reports %><br>
+    <%= f.number_field :days_before_reports %>
+  </div>
+  <div class="field">
+    <%= f.label :generate_reports %><br>
+    <%= f.check_box :generate_reports %>
+  </div>
+  <div class="field">
+    <%= f.label :time_zone %><br>
+    <%= f.text_field :time_zone %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

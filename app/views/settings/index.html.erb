@@ -1,0 +1,35 @@
+<h1>Listing settings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hours before email</th>
+      <th>Hours alert</th>
+      <th>Days before reports</th>
+      <th>Generate reports</th>
+      <th>Time zone</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @settings.each do |setting| %>
+      <tr>
+        <td><%= setting.hours_before_email %></td>
+        <td><%= setting.hours_alert %></td>
+        <td><%= setting.days_before_reports %></td>
+        <td><%= setting.generate_reports %></td>
+        <td><%= setting.time_zone %></td>
+        <td><%= link_to 'Show', setting %></td>
+        <td><%= link_to 'Edit', edit_setting_path(setting) %></td>
+        <td><%= link_to 'Destroy', setting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Setting', new_setting_path %>

@@ -22,6 +22,8 @@ HoursLogger::Application.configure do
   # Raise an error on page load if there are pending migrations
   config.active_record.migration_error = :page_load
 
+  
+  
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
@@ -39,6 +41,7 @@ HoursLogger::Application.configure do
 		:password => "#RSWE#FBGM" ,
 		:enable_starttls_auto => true
 	}
+	config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   
   

@@ -109,9 +109,7 @@ function updateTime(){
 				$('#for_hidden').html(" <input type='hidden' name='end_time' value='true'> ");
 				$('#for_hidden_1').html(" <input type='hidden' name='start_time' value='"+$.cookie('start_time')+"'> ");
 			
-			if ($("#div1").text() == "Email sent"){
-				flag = 1;
-			}
+
 			
 				if (flag==0){
 				    $.ajax({type: "POST", 

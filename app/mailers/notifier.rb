@@ -3,7 +3,7 @@ class Notifier < ActionMailer::Base
 
   
   def timer_running(user, time_started)
-    @user = user
+	@user = user
 	@time_started = time_started
     mail to: user.email
   end

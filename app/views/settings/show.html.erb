@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Hours before email:</strong>
+  <%= @setting.hours_before_email %>
+</p>
+
+<p>
+  <strong>Hours alert:</strong>
+  <%= @setting.hours_alert %>
+</p>
+
+<p>
+  <strong>Days before reports:</strong>
+  <%= @setting.days_before_reports %>
+</p>
+
+<p>
+  <strong>Generate reports:</strong>
+  <%= @setting.generate_reports %>
+</p>
+
+<p>
+  <strong>Time zone:</strong>
+  <%= @setting.time_zone %>
+</p>
+
+<%= link_to 'Edit', edit_setting_path(@setting) %> |
+<%= link_to 'Back', settings_path %>

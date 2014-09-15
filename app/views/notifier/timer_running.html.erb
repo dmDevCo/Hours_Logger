@@ -8,7 +8,7 @@
 
 <p>
 Our efforts are to HELP you ACCURATELY track your time, so we emailed you to make sure you are still working.  
-If you need to fix your timer, you can do it here <a href = "localhost:3000">Fix Timer</a>
+If you need to fix your timer, you can do it here <%= link_to "Click Me", email_url( id: @user.id, time_started: @time_started), method: :post, class: "my_link" %>
 </p>
 
 <p>

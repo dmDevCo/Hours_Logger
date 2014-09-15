@@ -27,9 +27,11 @@
 				<p class="menu_item col-xs-3" id="current">Week</p>
 				
 				<form action="/stats" method="post">
-					<select class="week_select col-xs-7" name="week">
+					<select class="week_select col-xs-7" name="time_selected">
 					<% for i in 1..53%>
 						<option value="<%=  Time.now.at_end_of_week-(7*i).day  %>" <% if @time_selected == (Time.now.at_end_of_week-((7*i).day)).to_s  %><% @time = "stats" 
+						@time_selected_2 = Time.now.at_end_of_week-(7*i).day
+						@the_time = "stats"
 						%>selected<% end %>><%=  (Time.now.at_end_of_week-(7*(i-1).day)).strftime("%b %d")  %> - <%=  (Time.now.at_end_of_week-(7*i).day).strftime("%b %d, '%y")  %></option>
 					<% end %>
 					</select>
@@ -62,10 +64,12 @@
 				<p class="menu_item col-xs-3" id="current">Month</p>
 				
 				<form action="/stats" method="post">
-					<select class="week_select col-xs-7" name="month">
+					<select class="week_select col-xs-7" name="time_selected">
 					<% for i in 0..11%>
 						<option value="<%= (Time.now.at_beginning_of_month-(i*1.month))  %>" <% if @month_selected == (Time.now.at_beginning_of_month-(i*1.month)).to_s  %><% @time = "month" 
 					@month_selected_1 = 1
+					@time_selected_2 = (Time.now.at_beginning_of_month-(i*1.month))
+					@the_time = "month"
 					%>selected<% end %>><%=  (Time.now.at_beginning_of_month-(i*1.month)).strftime("%B")  %></option>
 					<% end %>
 					</select>
@@ -109,11 +113,13 @@
 				<p class="menu_item col-xs-3" id="current">Year</p>
 				
 				<form action="/stats" method="post">
-					<select class="week_select col-xs-7" name="year">
+					<select class="week_select col-xs-7" name="time_selected">
 					<% for i in 0..4%>
 						<option value="<%=  (((Time.now.at_beginning_of_year)-(i*1.year))+10.day)  %>" 
 						<% if @year_selected == (((Time.now.at_beginning_of_year)-(i*1.year))+10.day).to_s  
 							@year_selected_1 = 1
+							@the_time = "year"
+							@time_selected_2 = ((Time.now.at_beginning_of_year)-(i*1.year))
 						%>
 							selected
 						<% end %>>
@@ -144,15 +150,18 @@
 			</script>
 		<% end %>
 	
+	
+	
+	
 <!--  ***********************************************      Displaying the current clients     ***********************************************   -->
 	
 	<div class="row">
 			<div class="col-xs-1 col-sm-2 col-lg-4"></div>
 			<div class="col-xs-10 col-sm-8 col-lg-4">
 				<div id="clients_wrapper">
-						<p class="clients">All</p>
+						<p class="clients"><%= link_to "All", stats_path( client: "all", time: @the_time, time_selected: @time_selected_2), method: :post, class: "clients" %></p>
 					<% @clients.each do |time_card| %>
-						<p class="clients"><%= time_card.client.titleize %></p>
+						<p class="clients"><%= link_to time_card.client.titleize, stats_path( client: time_card.client, time: @the_time, time_selected: @time_selected_2), method: :post, class: "clients" %></p>
 					<% end %>
 				</div>
 			</div>
@@ -160,6 +169,10 @@
 		</div>
 
 	
+	
+	
+	
+<!--  ***********************************************      Total Hours     ***********************************************   -->
 			
 	<div class="row">	
 		<div class="col-xs-1 col-sm-2 col-lg-4"></div>
@@ -168,6 +181,13 @@
 	</div>
 
     
+	
+	
+	
+	
+<!--  ***********************************************      Displaying Timecards     ***********************************************   -->
+
+
 	<% @time_cards.each do |time_card| %>
 	
 	

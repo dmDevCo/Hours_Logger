@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hours_before_email: 1
+  hours_alert: false
+  days_before_reports: 1
+  generate_reports: false
+  time_zone: MyString
+
+two:
+  hours_before_email: 1
+  hours_alert: false
+  days_before_reports: 1
+  generate_reports: false
+  time_zone: MyString

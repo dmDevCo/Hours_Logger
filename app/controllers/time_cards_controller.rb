@@ -30,6 +30,14 @@ class TimeCardsController < ApplicationController
   
   
   
+  def email_timer 
+	@user = User.find_by_name(params[:id])
+	if @user
+		set_user_cookie(@user)
+	end
+	
+    redirect_to root_url
+  end
   
   
   
@@ -49,20 +57,18 @@ class TimeCardsController < ApplicationController
 		beg_of_week = Time.now.at_end_of_week-8.day+1
 		end_of_week = Time.now.at_end_of_week-1.day+1
 		
-		if params[:week].present?
-			beg_of_week = params[:week]
+		if params[:time_selected].present?
+			beg_of_week = params[:time_selected]
 			beg_of_week = beg_of_week.to_datetime
-			end_of_week = params[:week]
+			end_of_week = params[:time_selected]
 			end_of_week = (end_of_week.to_datetime+6.day+1)
 			@time_selected = beg_of_week
 		end
+
+		beg_of_week = (beg_of_week-7.hours)
+		end_of_week = (end_of_week-7.hours+48.hours)
 		
 		@time_cards = current_user.time_cards.where(time_started: beg_of_week .. end_of_week).order("date DESC")
-	
-		@time_cards.each do |time_card|
-			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600)).round(2)
-		end
-		
 	end
 	
 	
@@ -72,19 +78,18 @@ class TimeCardsController < ApplicationController
 		beg_of_week = Time.now.at_end_of_week-8.day+1
 		end_of_week = Time.now.at_end_of_week-1.day+1
 		
-		if params[:week].present?
-			beg_of_week = params[:week]
+		if params[:time_selected].present?
+			beg_of_week = params[:time_selected]
 			beg_of_week = beg_of_week.to_datetime
-			end_of_week = params[:week]
+			end_of_week = params[:time_selected]
 			end_of_week = (end_of_week.to_datetime+6.day+1)
 			@time_selected = beg_of_week
 		end
 		
+		beg_of_week = (beg_of_week-7.hours)
+		end_of_week = (end_of_week-7.hours+24.hours)
+		
 		@time_cards = current_user.time_cards.where(time_started: beg_of_week .. end_of_week).order("date DESC")
-	
-		@time_cards.each do |time_card|
-			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600)).round(2)
-		end
 		
 	end
 	
@@ -96,19 +101,15 @@ class TimeCardsController < ApplicationController
 		beg_of_month = Time.now.at_beginning_of_month
 		end_of_month = Time.now.at_end_of_month
 		
-		if params[:month].present?
-			beg_of_month = params[:month]
+		if params[:time_selected].present?
+			beg_of_month = params[:time_selected]
 			beg_of_month = beg_of_month.to_datetime
-			end_of_month = params[:month]
+			end_of_month = params[:time_selected]
 			end_of_month = (end_of_month.to_datetime+1.month)
 			@month_selected = beg_of_month
 		end
 	
 		@time_cards = current_user.time_cards.where(date: beg_of_month .. end_of_month).order("date DESC")
-	
-		@time_cards.each do |time_card|
-			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
-		  end
 	end
 	
 	
@@ -120,23 +121,39 @@ class TimeCardsController < ApplicationController
 		beg_of_year = Time.now.at_beginning_of_year
 		end_of_year = Time.now.at_end_of_year
 		
-		if params[:year].present?
-			beg_of_year = params[:year]
+		if params[:time_selected].present?
+			beg_of_year = params[:time_selected]
 			beg_of_year = beg_of_year.to_datetime
-			end_of_year = params[:year]
+			end_of_year = params[:time_selected]
 			end_of_year = (end_of_year.to_datetime+1.year)
 			@year_selected = beg_of_year
 		end
 		
 		@time_cards = current_user.time_cards.where(date: beg_of_year .. end_of_year).order("date DESC")
-		
-		@time_cards.each do |time_card|
-			@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
-		end
 	end
 		clients = @time_cards
 		@clients = clients.uniq_by{|s| s.client}
+		
+	if params[:client].present?
+		if params[:client] != "all"
+			@time_cards = @time_cards.where(client: params[:client])
+		end
+	end
+		
+	
+	
+	# Total the Hours
+	@time_cards.each do |time_card|
+		@total_hours = (@total_hours+((time_card.time_stopped - time_card.time_started)/3600))
+	end
+	
   end
+  
+  
+  
+  
+  
+  
   
   def show
   end
